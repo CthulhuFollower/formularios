@@ -91,11 +91,11 @@
       <div class="row">
         <div class="field">
           <label for="doctor_nombre">Doctor(a)</label>
-          <input id="doctor_nombre" name="doctor_nombre" type="text" required maxlength="120" />
+          <input id="doctor_nombre" name="doctor_nombre" type="text" required maxlength="120" placeholder="Ej: Dr. Juan Perez Lopez" />
         </div>
         <div class="field">
           <label for="fecha_respuesta">Fecha</label>
-          <input id="fecha_respuesta" name="fecha_respuesta" type="date" required />
+          <input id="fecha_respuesta" name="fecha_respuesta" type="date" required placeholder="AAAA-MM-DD" />
         </div>
       </div>
     </div> -->
@@ -109,7 +109,7 @@
       <label class="opt"><input type="radio" name="dv_base" value="Ambos" /> Ambos</label>
       <div class="field">
         <label for="dv_base_ambos_detalle">Si es "Ambos", explique el criterio:</label>
-        <input id="dv_base_ambos_detalle" name="dv_base_ambos_detalle" type="text" maxlength="240" />
+        <input id="dv_base_ambos_detalle" name="dv_base_ambos_detalle" type="text" maxlength="240" placeholder="Ej: Tomar mejor ojo para DV final y peor ojo como nota secundaria" />
       </div>
 
       <div class="sep"></div>
@@ -120,7 +120,7 @@
       <label class="opt"><input type="radio" name="dv_av_fuente" value="Otro" /> Otro criterio</label>
       <div class="field">
         <label for="dv_av_fuente_otro">Si eligio "Otro", describa la regla:</label>
-        <input id="dv_av_fuente_otro" name="dv_av_fuente_otro" type="text" maxlength="240" />
+        <input id="dv_av_fuente_otro" name="dv_av_fuente_otro" type="text" maxlength="240" placeholder="Ej: Usar estenopeico solo si mejora al menos 2 lineas" />
       </div>
 
       <div class="sep"></div>
@@ -133,23 +133,23 @@
         </div>
         <div class="field">
           <label for="dv_1">DV 1</label>
-          <input id="dv_1" name="dv_1" type="text" required maxlength="120" />
+          <input id="dv_1" name="dv_1" type="text" required maxlength="120" placeholder="Ej: DV1 = <20/60 y >=20/200" />
         </div>
         <div class="field">
           <label for="dv_2">DV 2</label>
-          <input id="dv_2" name="dv_2" type="text" required maxlength="120" />
+          <input id="dv_2" name="dv_2" type="text" required maxlength="120" placeholder="Ej: DV2 = <20/200 y >=20/400" />
         </div>
         <div class="field">
           <label for="dv_3">DV 3</label>
-          <input id="dv_3" name="dv_3" type="text" required maxlength="120" />
+          <input id="dv_3" name="dv_3" type="text" required maxlength="120" placeholder="Ej: DV3 = <20/400 y >=20/1200" />
         </div>
         <div class="field">
           <label for="dv_4">DV 4</label>
-          <input id="dv_4" name="dv_4" type="text" required maxlength="120" />
+          <input id="dv_4" name="dv_4" type="text" required maxlength="120" placeholder="Ej: DV4 = <20/1200 o PL" />
         </div>
         <div class="field">
           <label for="dv_5">DV 5</label>
-          <input id="dv_5" name="dv_5" type="text" required maxlength="120" />
+          <input id="dv_5" name="dv_5" type="text" required maxlength="120" placeholder="Ej: DV5 = NPL" />
         </div>
       </div>
 
@@ -188,7 +188,7 @@
       <label class="opt"><input type="radio" name="refraccion_base" value="Otro" /> Otro</label>
       <div class="field">
         <label for="refraccion_base_otro">Si eligio "Otro", explique:</label>
-        <input id="refraccion_base_otro" name="refraccion_base_otro" type="text" maxlength="240" />
+        <input id="refraccion_base_otro" name="refraccion_base_otro" type="text" maxlength="240" placeholder="Ej: ESF para eje principal y CIL para subtipo" />
       </div>
 
       <div class="field">
@@ -241,11 +241,11 @@
         </div>
         <div class="field">
           <label for="folio_digitos">Cantidad de digitos</label>
-          <input id="folio_digitos" name="folio_digitos" type="number" required min="1" max="10" value="4" />
+          <input id="folio_digitos" name="folio_digitos" type="number" required min="1" max="10" value="4" placeholder="Ej: 4" />
         </div>
         <div class="field">
           <label for="folio_inicio">Valor inicial</label>
-          <input id="folio_inicio" name="folio_inicio" type="number" required min="1" value="1" />
+          <input id="folio_inicio" name="folio_inicio" type="number" required min="1" value="1" placeholder="Ej: 1" />
         </div>
       </div>
       <div class="preview-block">
@@ -269,7 +269,7 @@
         <div class="field"><label for="ca_av_od">AV OD</label><input id="ca_av_od" name="ca_av_od" type="text" required maxlength="40" placeholder="Ej: 20/70" /></div>
         <div class="field"><label for="ca_av_oi">AV OI</label><input id="ca_av_oi" name="ca_av_oi" type="text" required maxlength="40" placeholder="Ej: 20/100" /></div>
         <div class="field"><label for="ca_est_od">Estenopeico OD (si aplica)</label><input id="ca_est_od" name="ca_est_od" type="text" maxlength="40" placeholder='Ej: "No" o "Si, 20/50"' /></div>
-        <div class="field"><label for="ca_est_oi">Estenopeico OI (si aplica)</label><input id="ca_est_oi" name="ca_est_oi" type="text" maxlength="40" /></div>
+        <div class="field"><label for="ca_est_oi">Estenopeico OI (si aplica)</label><input id="ca_est_oi" name="ca_est_oi" type="text" maxlength="40" placeholder='Ej: "No" o "Si, 20/40"' /></div>
         <div class="field"><label for="ca_dv_esperado">Salida esperada DV</label><input id="ca_dv_esperado" name="ca_dv_esperado" type="text" required maxlength="40" placeholder="Ej: DV 2" /></div>
       </div>
 
@@ -278,15 +278,15 @@
       <div class="case-grid">
         <div class="field"><label for="cb_ref_od">Refraccion OD (ESF/CIL/EJE)</label><input id="cb_ref_od" name="cb_ref_od" type="text" required maxlength="80" placeholder="Ej: -2.00 / -1.00 x 10" /></div>
         <div class="field"><label for="cb_ref_oi">Refraccion OI (ESF/CIL/EJE)</label><input id="cb_ref_oi" name="cb_ref_oi" type="text" required maxlength="80" placeholder="Ej: +0.50 / -0.75 x 90" /></div>
-        <div class="field"><label for="cb_dx_od_esperado">Salida esperada Dx OD</label><input id="cb_dx_od_esperado" name="cb_dx_od_esperado" type="text" required maxlength="100" /></div>
-        <div class="field"><label for="cb_dx_oi_esperado">Salida esperada Dx OI</label><input id="cb_dx_oi_esperado" name="cb_dx_oi_esperado" type="text" required maxlength="100" /></div>
+        <div class="field"><label for="cb_dx_od_esperado">Salida esperada Dx OD</label><input id="cb_dx_od_esperado" name="cb_dx_od_esperado" type="text" required maxlength="100" placeholder="Ej: Miopia con astigmatismo" /></div>
+        <div class="field"><label for="cb_dx_oi_esperado">Salida esperada Dx OI</label><input id="cb_dx_oi_esperado" name="cb_dx_oi_esperado" type="text" required maxlength="100" placeholder="Ej: Hipermetropia leve" /></div>
       </div>
 
       <div class="sep"></div>
       <h3>Caso C - Alertas (obligatorio)</h3>
       <div class="case-grid">
-        <div class="field"><label for="cc_pio_od">PIO OD</label><input id="cc_pio_od" name="cc_pio_od" type="number" required min="0" max="80" /></div>
-        <div class="field"><label for="cc_pio_oi">PIO OI</label><input id="cc_pio_oi" name="cc_pio_oi" type="number" required min="0" max="80" /></div>
+        <div class="field"><label for="cc_pio_od">PIO OD</label><input id="cc_pio_od" name="cc_pio_od" type="number" required min="0" max="80" placeholder="Ej: 18" /></div>
+        <div class="field"><label for="cc_pio_oi">PIO OI</label><input id="cc_pio_oi" name="cc_pio_oi" type="number" required min="0" max="80" placeholder="Ej: 26" /></div>
         <div class="field"><label for="cc_kp_od">Kp OD</label><input id="cc_kp_od" name="cc_kp_od" type="text" required maxlength="40" placeholder="Ej: 44.00" /></div>
         <div class="field"><label for="cc_kp_oi">Kp OI</label><input id="cc_kp_oi" name="cc_kp_oi" type="text" required maxlength="40" placeholder="Ej: 46.25" /></div>
         <div class="field"><label for="cc_ret_od">Reflejo retina OD</label><input id="cc_ret_od" name="cc_ret_od" type="text" required maxlength="40" placeholder="Ej: Rojo" /></div>
