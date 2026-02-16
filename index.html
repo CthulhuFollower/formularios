@@ -3,349 +3,1225 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Cuestionario clinico - Configuracion del sistema</title>
+  <title>Cuestionario clínico · Configuración del sistema</title>
+
   <style>
-    :root { color-scheme: light; }
-    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; line-height: 1.35; margin: 24px; color: #111; background: #f8f8f8; }
-    h1 { font-size: 22px; margin: 0 0 8px; }
-    h2 { font-size: 17px; margin: 0 0 10px; }
-    h3 { font-size: 15px; margin: 14px 0 8px; }
-    .meta { margin: 0 0 18px; font-size: 14px; color: #333; }
-    .small { font-size: 13px; color: #333; }
-    .hint { font-size: 12px; color: #555; margin-top: 6px; }
-    .box { border: 1px solid #ddd; border-radius: 12px; padding: 16px; margin: 14px 0; background: #fff; }
-    .row { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
-    .field { display: flex; flex-direction: column; gap: 6px; }
-    .field > label { font-size: 13px; color: #222; }
-    label.opt { display: block; margin: 6px 0; }
-    input[type="text"], input[type="number"], input[type="date"], select, textarea {
-      width: 100%;
-      padding: 10px 12px;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      box-sizing: border-box;
-      font: inherit;
-      background: #fff;
+    :root{
+      --bg0:#0b1220;
+      --bg1:#0f1a2e;
+      --card:#0f1b2f;
+      --card2:#0d1729;
+      --text:#eaf0ff;
+      --muted:#b6c3e6;
+      --muted2:#92a3cc;
+      --line:rgba(255,255,255,.10);
+      --line2:rgba(255,255,255,.14);
+      --brand:#6ea8ff;
+      --brand2:#7df1d6;
+      --ok:#7df1d6;
+      --warn:#ffd18d;
+      --danger:#ff7a7a;
+
+      --shadow: 0 22px 55px rgba(0,0,0,.35);
+      --shadow2: 0 10px 30px rgba(0,0,0,.25);
+      --r: 18px;
+      --r2: 14px;
+
+      --focus: 0 0 0 4px rgba(110,168,255,.18), 0 0 0 1px rgba(110,168,255,.45);
+      --pad: 18px;
+      --pad2: 14px;
+
+      color-scheme: dark;
     }
-    textarea { min-height: 88px; resize: vertical; }
-    .sep { height: 1px; background: #e6e6e6; margin: 12px 0; }
-    .footer { margin-top: 18px; font-size: 13px; color: #333; }
-    .actions { position: sticky; bottom: 0; background: #f8f8f8; padding: 12px 0 4px; }
-    button {
-      border: 1px solid #111;
-      border-radius: 10px;
-      background: #111;
-      color: #fff;
+
+    /* Fondo cálido y “menos clínico” */
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      line-height:1.35;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 700px at 15% 0%, rgba(110,168,255,.22), transparent 55%),
+        radial-gradient(900px 600px at 85% 10%, rgba(125,241,214,.16), transparent 60%),
+        radial-gradient(900px 900px at 50% 105%, rgba(255,209,141,.10), transparent 55%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+    }
+
+    a{ color:inherit; }
+
+    .wrap{
+      max-width: 1040px;
+      margin: 24px auto 120px;
+      padding: 0 16px;
+    }
+
+    /* Header con tono humano */
+    .hero{
+      position:relative;
+      padding: 18px 18px 8px;
+      border-radius: var(--r);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow2);
+      overflow:hidden;
+    }
+    .hero:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(600px 220px at 10% 10%, rgba(110,168,255,.20), transparent 55%),
+        radial-gradient(400px 220px at 75% 0%, rgba(125,241,214,.14), transparent 60%);
+      pointer-events:none;
+      filter: blur(0px);
+    }
+
+    .hero-top{
+      position:relative;
+      display:flex;
+      gap:14px;
+      align-items:flex-start;
+      justify-content:space-between;
+      flex-wrap:wrap;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width: 280px;
+    }
+    .mark{
+      width: 46px; height: 46px;
+      border-radius: 14px;
+      background:
+        radial-gradient(18px 18px at 30% 30%, rgba(255,255,255,.28), transparent 60%),
+        linear-gradient(135deg, rgba(110,168,255,.95), rgba(125,241,214,.80));
+      box-shadow: 0 12px 30px rgba(110,168,255,.18);
+      border: 1px solid rgba(255,255,255,.18);
+      display:grid;
+      place-items:center;
+      position:relative;
+      overflow:hidden;
+    }
+    .mark svg{ opacity:.95 }
+    h1{
+      position:relative;
+      margin:0;
+      font-size: 20px;
+      letter-spacing:.2px;
+    }
+    .subtitle{
+      position:relative;
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      max-width: 62ch;
+    }
+
+    /* Barra de progreso + tips (reduce “tarea pesada”) */
+    .status{
+      position:relative;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      min-width: 280px;
+      flex: 1;
+      align-items:flex-end;
+    }
+    .progress{
+      width: min(420px, 100%);
+      background: rgba(255,255,255,.06);
+      border:1px solid var(--line);
+      border-radius: 999px;
+      height: 12px;
+      overflow:hidden;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.12);
+    }
+    .progress > div{
+      height:100%;
+      width: 0%;
+      background: linear-gradient(90deg, rgba(110,168,255,.95), rgba(125,241,214,.85));
+      border-radius: 999px;
+      transition: width .35s ease;
+    }
+    .statusline{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+      color:var(--muted);
+      font-size: 12px;
+    }
+    .pill{
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.12);
+      padding: 6px 10px;
+      border-radius: 999px;
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+    }
+    .pill strong{ color: var(--text); font-weight: 650; }
+
+    /* Layout: navegación lateral suave (reduce carga cognitiva) */
+    .grid{
+      display:grid;
+      grid-template-columns: 260px 1fr;
+      gap: 14px;
+      margin-top: 14px;
+      align-items:start;
+    }
+    @media (max-width: 980px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+
+    .nav{
+      position: sticky;
+      top: 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--r);
+      background: rgba(255,255,255,.04);
+      box-shadow: var(--shadow2);
+      overflow:hidden;
+    }
+    .nav-head{
+      padding: 14px 14px 10px;
+      border-bottom: 1px solid var(--line);
+    }
+    .nav-title{
+      margin:0;
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing:.2px;
+    }
+    .nav-list{
+      list-style:none;
+      padding: 10px;
+      margin:0;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .nav a{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      padding: 10px 10px;
+      border-radius: 14px;
+      text-decoration:none;
+      border: 1px solid transparent;
+      color: var(--text);
+      background: transparent;
+      transition: background .15s ease, border-color .15s ease, transform .15s ease;
+    }
+    .nav a:hover{
+      background: rgba(255,255,255,.06);
+      border-color: var(--line);
+      transform: translateY(-1px);
+    }
+    .nav a.active{
+      background: linear-gradient(180deg, rgba(110,168,255,.16), rgba(125,241,214,.10));
+      border-color: rgba(110,168,255,.35);
+      box-shadow: 0 10px 24px rgba(0,0,0,.18);
+    }
+    .dot{
+      width:10px; height:10px; border-radius:99px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.06);
+      flex: 0 0 auto;
+    }
+    .dot.done{
+      background: rgba(125,241,214,.85);
+      border-color: rgba(125,241,214,.55);
+      box-shadow: 0 0 0 3px rgba(125,241,214,.14);
+    }
+    .dot.partial{
+      background: rgba(110,168,255,.75);
+      border-color: rgba(110,168,255,.55);
+      box-shadow: 0 0 0 3px rgba(110,168,255,.14);
+    }
+    .nav small{
+      color: var(--muted);
+      margin-left:auto;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Tarjetas de sección: más cálidas, menos “form” */
+    .card{
+      border: 1px solid var(--line);
+      border-radius: var(--r);
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .section{
+      padding: 16px;
+      border-bottom: 1px solid var(--line);
+    }
+    .section:last-child{ border-bottom:none; }
+    .section h2{
+      margin:0;
+      font-size: 16px;
+      letter-spacing:.2px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    .section h2 .tag{
+      font-size: 12px;
+      color: var(--muted);
+      padding: 4px 8px;
+      border:1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(0,0,0,.10);
+    }
+    .lead{
+      margin: 8px 0 0;
+      font-size: 13px;
+      color: var(--muted);
+      max-width: 72ch;
+    }
+
+    .row{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:7px;
+    }
+    .field label{
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing:.2px;
+    }
+
+    /* Inputs con “calma”: bordes suaves + foco evidente */
+    input[type="text"], input[type="number"], input[type="date"], select, textarea{
+      width:100%;
+      padding: 11px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(15,27,47,.55);
+      color: var(--text);
+      outline: none;
+      box-sizing:border-box;
+      font: inherit;
+      transition: border-color .15s ease, box-shadow .15s ease, transform .12s ease, background .15s ease;
+    }
+    input::placeholder, textarea::placeholder{ color: rgba(182,195,230,.55); }
+    textarea{ min-height: 92px; resize: vertical; }
+
+    input:focus, textarea:focus, select:focus{
+      box-shadow: var(--focus);
+      border-color: rgba(110,168,255,.55);
+      background: rgba(15,27,47,.78);
+    }
+
+    /* Validación amable (no regaña) */
+    .invalid input, .invalid textarea, .invalid select{
+      border-color: rgba(255,122,122,.65) !important;
+      box-shadow: 0 0 0 4px rgba(255,122,122,.12);
+    }
+    .msg{
+      font-size: 12px;
+      color: var(--muted2);
+      margin-top: 2px;
+    }
+    .msg.err{ color: rgba(255,122,122,.92); }
+
+    .sep{
+      height: 1px;
+      background: var(--line);
+      margin: 14px 0;
+    }
+
+    /* Radios/checkboxes: estilo tarjeta (reduce fricción) */
+    .choice-group{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .choice{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      padding: 12px 12px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(0,0,0,.10);
+      cursor:pointer;
+      transition: transform .15s ease, border-color .15s ease, background .15s ease, box-shadow .15s ease;
+      user-select:none;
+    }
+    .choice:hover{
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,.18);
+      background: rgba(255,255,255,.06);
+      box-shadow: 0 10px 24px rgba(0,0,0,.18);
+    }
+    .choice input{
+      margin-top: 3px;
+      accent-color: var(--brand);
+    }
+    .choice .ct{
+      display:flex; flex-direction:column; gap:3px;
+    }
+    .choice .ct strong{
+      font-size: 13px;
+      letter-spacing:.2px;
+    }
+    .choice .ct span{
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* Bloques de ayuda */
+    .note{
+      border: 1px solid rgba(255,209,141,.30);
+      background: linear-gradient(180deg, rgba(255,209,141,.12), rgba(0,0,0,.05));
+      border-radius: 16px;
+      padding: 12px 12px;
+      margin-top: 12px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .note strong{ color: var(--text); }
+
+    /* Vista previa folio */
+    .preview{
+      border: 1px dashed rgba(255,255,255,.20);
+      background: rgba(0,0,0,.14);
+      border-radius: 16px;
+      padding: 12px 12px;
+      margin-top: 10px;
+    }
+    .mono{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-weight: 750;
+      letter-spacing:.5px;
+      font-size: 15px;
+    }
+
+    /* Barra inferior “calmada” con resumen y guardado */
+    .actions{
+      position: fixed;
+      left:0; right:0; bottom:0;
+      padding: 10px 14px 14px;
+      background: linear-gradient(180deg, rgba(11,18,32,0), rgba(11,18,32,.85) 35%, rgba(11,18,32,.95));
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(255,255,255,.10);
+    }
+    .actions-inner{
+      max-width: 1040px;
+      margin: 0 auto;
+      display:flex;
+      gap: 12px;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+    }
+    .summary{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .summary .kpi{
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.10);
+      border-radius: 999px;
+      padding: 7px 10px;
+      display:flex;
+      gap:8px;
+      align-items:center;
+      font-variant-numeric: tabular-nums;
+    }
+    .btns{ display:flex; gap:10px; align-items:center; }
+
+    button{
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 14px;
       padding: 11px 14px;
       font: inherit;
-      cursor: pointer;
+      cursor:pointer;
+      color: var(--text);
+      background: rgba(255,255,255,.06);
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease, border-color .15s ease;
     }
-    button:hover { background: #000; }
-    .notice {
-      border: 1px solid #ffd18d;
-      background: #fff8ec;
-      border-radius: 10px;
-      padding: 10px 12px;
-      margin: 12px 0;
-      font-size: 13px;
+    button:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.10);
+      box-shadow: 0 12px 28px rgba(0,0,0,.22);
+      border-color: rgba(255,255,255,.24);
     }
-    .case-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 10px;
+    .primary{
+      background: linear-gradient(135deg, rgba(110,168,255,.95), rgba(125,241,214,.82));
+      color: #0b1220;
+      border-color: rgba(255,255,255,.22);
+      font-weight: 750;
     }
-    .preview-block {
-      margin-top: 10px;
-      border: 1px dashed #bdbdbd;
-      border-radius: 10px;
-      padding: 10px 12px;
-      background: #fafafa;
+    .primary:hover{
+      background: linear-gradient(135deg, rgba(110,168,255,1), rgba(125,241,214,.92));
     }
-    .folio-example {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      font-size: 14px;
-      font-weight: 700;
-      letter-spacing: 0.3px;
+    .ghost{
+      background: transparent;
     }
-    @media print {
-      .hint, .actions, .notice { display: none; }
-      body { margin: 10mm; background: #fff; }
-      .box { break-inside: avoid; }
+
+    .footer{
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 12px;
+      padding: 12px 6px 0;
+    }
+
+    /* Print */
+    @media print{
+      .nav, .actions { display:none !important; }
+      body{ background:#fff; color:#000; }
+      .hero, .card{ box-shadow:none; }
+      .hero, .card, .section{ border-color:#ddd; background:#fff; }
+      input, textarea, select{ background:#fff; color:#000; border-color:#ccc; }
+    }
+
+    /* Motion reducido */
+    @media (prefers-reduced-motion: reduce){
+      *{ transition:none !important; scroll-behavior:auto !important; }
     }
   </style>
 </head>
+
 <body>
-  <h1>Cuestionario clinico (para configurar el sistema)</h1>
-  <p class="meta">
-    Objetivo: configurar calculos automaticos (DV OMS, diagnostico refractivo e imagenes) exactamente con su criterio clinico.
-    <br />
-  </p>
-
-  <form action="https://formsubmit.co/julian110101@gmail.com" method="POST">
-    <input type="hidden" name="_subject" value="Respuestas cuestionario clinico VisionCeiba" />
-    <input type="hidden" name="_template" value="table" />
-    <input type="hidden" name="_captcha" value="false" />
-
-    <!-- div class="box">
-      <h2>Datos generales</h2>
-      <div class="row">
-        <div class="field">
-          <label for="doctor_nombre">Doctor(a)</label>
-          <input id="doctor_nombre" name="doctor_nombre" type="text" required maxlength="120" placeholder="Ej: Dr. Juan Perez Lopez" />
+  <div class="wrap">
+    <header class="hero" id="top">
+      <div class="hero-top">
+        <div class="brand">
+          <div class="mark" aria-hidden="true">
+            <!-- icono simple (árbol/vida) -->
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2c-2.3 2.7-3.6 4.9-3.6 7.2 0 1.5.6 2.9 1.7 4.1-2.6-.1-4.6-1.1-6.1-3.3-.2 4.6 3 8.6 8 9.2V22h2v-2.8c5-.6 8.2-4.6 8-9.2-1.5 2.2-3.5 3.2-6.1 3.3 1.1-1.2 1.7-2.6 1.7-4.1C15.6 6.9 14.3 4.7 12 2Z" fill="rgba(11,18,32,.9)"/>
+            </svg>
+          </div>
+          <div>
+            <h1>Cuestionario clínico · Configuración</h1>
+            <p class="subtitle">
+              Esto nos sirve para que el sistema “piense” como usted: DV OMS, diagnóstico refractivo e imágenes.
+              <br><span style="color:rgba(234,240,255,.92)">Toma ~8–12 min</span> si ya tiene criterios claros.
+            </p>
+          </div>
         </div>
-        <div class="field">
-          <label for="fecha_respuesta">Fecha</label>
-          <input id="fecha_respuesta" name="fecha_respuesta" type="date" required placeholder="AAAA-MM-DD" />
-        </div>
-      </div>
-    </div> -->
 
-    <div class="box">
-      <h2>1) Clasificacion "DV OMS" (Deficit Visual)</h2>
-
-      <p class="small"><strong>1.1</strong> La clasificacion DV se basa en:</p>
-      <label class="opt"><input type="radio" name="dv_base" value="Mejor ojo" required /> Mejor ojo</label>
-      <label class="opt"><input type="radio" name="dv_base" value="Peor ojo" /> Peor ojo</label>
-      <label class="opt"><input type="radio" name="dv_base" value="Ambos" /> Ambos</label>
-      <div class="field">
-        <label for="dv_base_ambos_detalle">Si es "Ambos", explique el criterio:</label>
-        <input id="dv_base_ambos_detalle" name="dv_base_ambos_detalle" type="text" maxlength="240" placeholder="Ej: Tomar mejor ojo para DV final y peor ojo como nota secundaria" />
-      </div>
-
-      <div class="sep"></div>
-
-      <p class="small"><strong>1.2</strong> Que AV debe usarse para clasificar DV?</p>
-      <label class="opt"><input type="radio" name="dv_av_fuente" value="Sin estenopeico siempre" required /> AV sin estenopeico (siempre)</label>
-      <label class="opt"><input type="radio" name="dv_av_fuente" value="Con estenopeico si existe" /> Si hay estenopeico, usar estenopeico</label>
-      <label class="opt"><input type="radio" name="dv_av_fuente" value="Otro" /> Otro criterio</label>
-      <div class="field">
-        <label for="dv_av_fuente_otro">Si eligio "Otro", describa la regla:</label>
-        <input id="dv_av_fuente_otro" name="dv_av_fuente_otro" type="text" maxlength="240" placeholder="Ej: Usar estenopeico solo si mejora al menos 2 lineas" />
-      </div>
-
-      <div class="sep"></div>
-
-      <p class="small"><strong>1.3</strong> Confirme limites exactos para todos los niveles DV del sistema (0 a 5):</p>
-      <div class="row">
-        <div class="field">
-          <label for="dv_0">DV 0</label>
-          <input id="dv_0" name="dv_0" type="text" required maxlength="120" placeholder="Ej: Sin DV (>= 20/60)" />
-        </div>
-        <div class="field">
-          <label for="dv_1">DV 1</label>
-          <input id="dv_1" name="dv_1" type="text" required maxlength="120" placeholder="Ej: DV1 = <20/60 y >=20/200" />
-        </div>
-        <div class="field">
-          <label for="dv_2">DV 2</label>
-          <input id="dv_2" name="dv_2" type="text" required maxlength="120" placeholder="Ej: DV2 = <20/200 y >=20/400" />
-        </div>
-        <div class="field">
-          <label for="dv_3">DV 3</label>
-          <input id="dv_3" name="dv_3" type="text" required maxlength="120" placeholder="Ej: DV3 = <20/400 y >=20/1200" />
-        </div>
-        <div class="field">
-          <label for="dv_4">DV 4</label>
-          <input id="dv_4" name="dv_4" type="text" required maxlength="120" placeholder="Ej: DV4 = <20/1200 o PL" />
-        </div>
-        <div class="field">
-          <label for="dv_5">DV 5</label>
-          <input id="dv_5" name="dv_5" type="text" required maxlength="120" placeholder="Ej: DV5 = NPL" />
+        <div class="status" aria-live="polite">
+          <div class="progress" title="Progreso">
+            <div id="progressFill"></div>
+          </div>
+          <div class="statusline">
+            <span class="pill">Completado: <strong id="doneCount">0</strong>/<strong id="reqCount">0</strong></span>
+            <span class="pill">Sección: <strong id="activeSection">1</strong>/5</span>
+            <span class="pill" id="autosavePill">Auto-guardado: <strong id="autosaveState">Listo</strong></span>
+          </div>
         </div>
       </div>
+    </header>
 
-      <div class="field">
-        <label for="dv_notas">Notas / aclaraciones DV (opcional)</label>
-        <textarea id="dv_notas" name="dv_notas"></textarea>
+    <form id="form" action="https://formsubmit.co/julian110101@gmail.com" method="POST" novalidate>
+      <input type="hidden" name="_subject" value="Respuestas cuestionario clinico VisionCeiba" />
+      <input type="hidden" name="_template" value="table" />
+      <input type="hidden" name="_captcha" value="false" />
+
+      <div class="grid">
+        <!-- NAV -->
+        <aside class="nav" aria-label="Navegación de secciones">
+          <div class="nav-head">
+            <p class="nav-title">Ruta rápida</p>
+          </div>
+          <ul class="nav-list">
+            <li><a href="#s1" data-nav="s1" class="active"><span class="dot" id="dot-s1"></span><span>1) DV OMS</span><small id="mini-s1">0%</small></a></li>
+            <li><a href="#s2" data-nav="s2"><span class="dot" id="dot-s2"></span><span>2) Dx Refractivo</span><small id="mini-s2">0%</small></a></li>
+            <li><a href="#s3" data-nav="s3"><span class="dot" id="dot-s3"></span><span>3) Imágenes</span><small id="mini-s3">0%</small></a></li>
+            <li><a href="#s4" data-nav="s4"><span class="dot" id="dot-s4"></span><span>4) Integridad/Folio</span><small id="mini-s4">0%</small></a></li>
+            <li><a href="#s5" data-nav="s5"><span class="dot" id="dot-s5"></span><span>5) Casos clínicos</span><small id="mini-s5">0%</small></a></li>
+          </ul>
+        </aside>
+
+        <!-- CONTENT -->
+        <main class="card">
+
+          <!-- SECTION 1 -->
+          <section class="section" id="s1" data-section>
+            <h2>1) Clasificación “DV OMS” <span class="tag">Deficit Visual</span></h2>
+            <p class="lead">
+              Responda como si estuviera enseñándole al sistema su criterio. Si hay excepciones, escríbalas: nos ahorra retrabajo.
+            </p>
+
+            <div class="sep"></div>
+
+            <p class="lead" style="margin-top:0"><strong>1.1</strong> La clasificación DV se basa en:</p>
+            <div class="choice-group" role="radiogroup" aria-label="Base DV">
+              <label class="choice">
+                <input type="radio" name="dv_base" value="Mejor ojo" required>
+                <span class="ct"><strong>Mejor ojo</strong><span>DV final según el ojo con mejor AV.</span></span>
+              </label>
+              <label class="choice">
+                <input type="radio" name="dv_base" value="Peor ojo">
+                <span class="ct"><strong>Peor ojo</strong><span>Prioriza el peor escenario funcional.</span></span>
+              </label>
+              <label class="choice">
+                <input type="radio" name="dv_base" value="Ambos">
+                <span class="ct"><strong>Ambos</strong><span>Regla combinada (explique abajo).</span></span>
+              </label>
+            </div>
+
+            <div class="row">
+              <div class="field" data-depends-on="dv_base" data-show-when="Ambos">
+                <label for="dv_base_ambos_detalle">Si es “Ambos”, explique el criterio</label>
+                <input id="dv_base_ambos_detalle" name="dv_base_ambos_detalle" type="text" maxlength="240"
+                  placeholder="Ej: Mejor ojo para DV final, peor ojo como nota secundaria" />
+                <div class="msg">Tip: describa en una frase la regla que usaría en consultorio.</div>
+              </div>
+            </div>
+
+            <div class="sep"></div>
+
+            <p class="lead" style="margin-top:0"><strong>1.2</strong> ¿Qué AV se usa para clasificar DV?</p>
+            <div class="choice-group" role="radiogroup" aria-label="Fuente AV DV">
+              <label class="choice">
+                <input type="radio" name="dv_av_fuente" value="Sin estenopeico siempre" required>
+                <span class="ct"><strong>Sin estenopeico (siempre)</strong><span>Usa AV base, sin pinhole.</span></span>
+              </label>
+              <label class="choice">
+                <input type="radio" name="dv_av_fuente" value="Con estenopeico si existe">
+                <span class="ct"><strong>Con estenopeico si existe</strong><span>Si hay estenopeico, toma ese valor.</span></span>
+              </label>
+              <label class="choice">
+                <input type="radio" name="dv_av_fuente" value="Otro">
+                <span class="ct"><strong>Otro criterio</strong><span>Ej: solo si mejora “X” líneas.</span></span>
+              </label>
+            </div>
+
+            <div class="row">
+              <div class="field" data-depends-on="dv_av_fuente" data-show-when="Otro">
+                <label for="dv_av_fuente_otro">Si eligió “Otro”, describa la regla</label>
+                <input id="dv_av_fuente_otro" name="dv_av_fuente_otro" type="text" maxlength="240"
+                  placeholder="Ej: Usar estenopeico solo si mejora al menos 2 líneas" />
+                <div class="msg">Mientras más exacto, menos dudas durante la implementación.</div>
+              </div>
+            </div>
+
+            <div class="sep"></div>
+
+            <p class="lead" style="margin-top:0"><strong>1.3</strong> Límites exactos para DV (0 a 5)</p>
+            <div class="row">
+              <div class="field">
+                <label for="dv_0">DV 0</label>
+                <input id="dv_0" name="dv_0" type="text" required maxlength="120" placeholder="Ej: Sin DV (>= 20/60)" />
+              </div>
+              <div class="field">
+                <label for="dv_1">DV 1</label>
+                <input id="dv_1" name="dv_1" type="text" required maxlength="120" placeholder="Ej: <20/60 y >=20/200" />
+              </div>
+              <div class="field">
+                <label for="dv_2">DV 2</label>
+                <input id="dv_2" name="dv_2" type="text" required maxlength="120" placeholder="Ej: <20/200 y >=20/400" />
+              </div>
+              <div class="field">
+                <label for="dv_3">DV 3</label>
+                <input id="dv_3" name="dv_3" type="text" required maxlength="120" placeholder="Ej: <20/400 y >=20/1200" />
+              </div>
+              <div class="field">
+                <label for="dv_4">DV 4</label>
+                <input id="dv_4" name="dv_4" type="text" required maxlength="120" placeholder="Ej: <20/1200 o PL" />
+              </div>
+              <div class="field">
+                <label for="dv_5">DV 5</label>
+                <input id="dv_5" name="dv_5" type="text" required maxlength="120" placeholder="Ej: NPL" />
+              </div>
+            </div>
+
+            <div class="field" style="margin-top:12px">
+              <label for="dv_notas">Notas DV (opcional)</label>
+              <textarea id="dv_notas" name="dv_notas" placeholder="Ej: Consideraciones especiales, excepciones o notas clínicas."></textarea>
+            </div>
+
+            <div class="note">
+              <strong>Idea clave:</strong> piense en esto como “entrenar” al sistema. Cualquier excepción que suele aplicar en su práctica vale oro.
+            </div>
+          </section>
+
+          <!-- SECTION 2 -->
+          <section class="section" id="s2" data-section>
+            <h2>2) Diagnóstico refractivo automático <span class="tag">Miopía · Hipermetropía · Astigmatismo</span></h2>
+            <p class="lead">
+              Aquí definimos reglas claras para que la salida se vea profesional y consistente (como si la escribiera usted).
+            </p>
+
+            <div class="row">
+              <div class="field">
+                <label for="emetropia_rango">2.1 Definición exacta de emetropía</label>
+                <input id="emetropia_rango" name="emetropia_rango" type="text" required maxlength="160" placeholder="Ej: ESF entre -0.50 y +0.50" />
+              </div>
+              <div class="field">
+                <label for="miopia_regla">Regla para Miopía</label>
+                <input id="miopia_regla" name="miopia_regla" type="text" required maxlength="160" placeholder="Ej: ESF < -0.50" />
+              </div>
+              <div class="field">
+                <label for="hipermetropia_regla">Regla para Hipermetropía</label>
+                <input id="hipermetropia_regla" name="hipermetropia_regla" type="text" required maxlength="160" placeholder="Ej: ESF > +0.50" />
+              </div>
+              <div class="field">
+                <label for="astigmatismo_regla">Regla para Astigmatismo</label>
+                <input id="astigmatismo_regla" name="astigmatismo_regla" type="text" required maxlength="160" placeholder="Ej: |CIL| >= 0.75" />
+              </div>
+            </div>
+
+            <div class="sep"></div>
+
+            <p class="lead" style="margin-top:0"><strong>2.2</strong> La clasificación se basa en:</p>
+            <div class="choice-group" role="radiogroup" aria-label="Base refracción">
+              <label class="choice">
+                <input type="radio" name="refraccion_base" value="Esfera (ESF)" required>
+                <span class="ct"><strong>Esfera (ESF)</strong><span>Más directa y simple.</span></span>
+              </label>
+              <label class="choice">
+                <input type="radio" name="refraccion_base" value="Equivalente esferico (EE)">
+                <span class="ct"><strong>Equivalente esférico (EE)</strong><span>Útil para decisiones globales.</span></span>
+              </label>
+              <label class="choice">
+                <input type="radio" name="refraccion_base" value="Otro">
+                <span class="ct"><strong>Otro</strong><span>Regla combinada (explique).</span></span>
+              </label>
+            </div>
+
+            <div class="row">
+              <div class="field" data-depends-on="refraccion_base" data-show-when="Otro">
+                <label for="refraccion_base_otro">Si eligió “Otro”, explique</label>
+                <input id="refraccion_base_otro" name="refraccion_base_otro" type="text" maxlength="240"
+                  placeholder="Ej: ESF para tipo y CIL para subtipo" />
+                <div class="msg">La meta: una regla que cualquiera del equipo pueda implementar sin interpretar.</div>
+              </div>
+            </div>
+
+            <div class="field" style="margin-top:12px">
+              <label for="refraccion_combinacion">2.3 Si hay combinación, formato de salida deseado</label>
+              <input id="refraccion_combinacion" name="refraccion_combinacion" type="text" required maxlength="160"
+                placeholder='Ej: "Miopía con astigmatismo"' />
+              <div class="msg">Tip: escriba la frase tal cual quiere verla en la nota / reporte.</div>
+            </div>
+
+            <div class="field" style="margin-top:12px">
+              <label for="refraccion_notas">Notas refracción (opcional)</label>
+              <textarea id="refraccion_notas" name="refraccion_notas" placeholder="Ej: cómo manejar casos borderline o mixtos."></textarea>
+            </div>
+          </section>
+
+          <!-- SECTION 3 -->
+          <section class="section" id="s3" data-section>
+            <h2>3) Imágenes <span class="tag">OD/OI · Segmento anterior · Fondo</span></h2>
+            <p class="lead">
+              Definimos el comportamiento para evitar límites artificiales (y mantener orden cuando hay varias tomas).
+            </p>
+
+            <p class="lead" style="margin-top:12px"><strong>3.1</strong> ¿Permitir múltiples imágenes por rubro y ojo?</p>
+            <div class="choice-group" role="radiogroup" aria-label="Imágenes múltiples">
+              <label class="choice">
+                <input type="radio" name="imagenes_multiples" value="Si" required>
+                <span class="ct"><strong>Sí</strong><span>Ej: 3 fotos de Fondo de Ojo OD.</span></span>
+              </label>
+              <label class="choice">
+                <input type="radio" name="imagenes_multiples" value="No">
+                <span class="ct"><strong>No</strong><span>Solo 1 por rubro y ojo.</span></span>
+              </label>
+            </div>
+
+            <div class="field" style="margin-top:12px">
+              <label for="imagenes_notas">Notas imágenes (opcional)</label>
+              <textarea id="imagenes_notas" name="imagenes_notas" placeholder="Ej: cómo nombrar, si hay prioridad por calidad, etc."></textarea>
+            </div>
+          </section>
+
+          <!-- SECTION 4 -->
+          <section class="section" id="s4" data-section>
+            <h2>4) Integridad y folio interno <span class="tag">Duplicados · Folio</span></h2>
+            <p class="lead">
+              Aquí evitamos pacientes duplicados y definimos un folio claro. Piense en “reglas de seguridad” del sistema.
+            </p>
+
+            <div class="sep"></div>
+
+            <p class="lead" style="margin-top:0"><strong>4.1</strong> Regla exacta para rechazar duplicado</p>
+            <div class="choice-group" role="group" aria-label="Reglas duplicado">
+              <label class="choice">
+                <input type="checkbox" name="dup_reglas[]" value="Telefono exacto (solo digitos)">
+                <span class="ct"><strong>Teléfono</strong><span>Comparar solo dígitos.</span></span>
+              </label>
+              <label class="choice">
+                <input type="checkbox" name="dup_reglas[]" value="Correo exacto en minusculas">
+                <span class="ct"><strong>Correo</strong><span>Normalizar a minúsculas.</span></span>
+              </label>
+              <label class="choice">
+                <input type="checkbox" name="dup_reglas[]" value="Nombre completo normalizado + fecha de nacimiento exacta">
+                <span class="ct"><strong>Nombre + FN</strong><span>Nombre normalizado + fecha exacta.</span></span>
+              </label>
+              <label class="choice">
+                <input type="checkbox" name="dup_reglas[]" value="Nombre completo normalizado + fecha de nacimiento + sexo">
+                <span class="ct"><strong>Nombre + FN + sexo</strong><span>Más estricto para evitar homónimos.</span></span>
+              </label>
+            </div>
+
+            <div class="field" style="margin-top:12px">
+              <label for="dup_regla_final">Regla final exacta (obligatoria)</label>
+              <textarea id="dup_regla_final" name="dup_regla_final" required
+                placeholder="Escriba UNA regla final clara para el rechazo de duplicados."></textarea>
+              <div class="msg" id="dupRuleMsg">“Nombre completo normalizado” = sin acentos, sin dobles espacios, mayúsculas/minúsculas indiferentes.</div>
+            </div>
+
+            <div class="sep"></div>
+
+            <p class="lead" style="margin-top:0"><strong>4.2</strong> Formato del folio interno</p>
+            <div class="row">
+              <div class="field">
+                <label for="folio_prefijo">Prefijo</label>
+                <input id="folio_prefijo" name="folio_prefijo" type="text" required maxlength="16" placeholder="Ej: VC-P-" />
+              </div>
+              <div class="field">
+                <label for="folio_digitos">Cantidad de dígitos</label>
+                <input id="folio_digitos" name="folio_digitos" type="number" required min="1" max="10" value="4" />
+              </div>
+              <div class="field">
+                <label for="folio_inicio">Valor inicial</label>
+                <input id="folio_inicio" name="folio_inicio" type="number" required min="1" value="1" />
+              </div>
+            </div>
+
+            <div class="preview" aria-live="polite">
+              <div class="msg"><strong style="color:var(--text)">Vista previa:</strong> así lo verá el personal</div>
+              <div id="folio_preview" class="mono">VC-P-0001</div>
+            </div>
+
+            <div class="choice-group" role="radiogroup" aria-label="Reinicio de folio" style="margin-top:12px">
+              <label class="choice">
+                <input type="radio" name="folio_reinicio" value="Nunca" required>
+                <span class="ct"><strong>Nunca reinicia</strong><span>Secuencia continua.</span></span>
+              </label>
+              <label class="choice">
+                <input type="radio" name="folio_reinicio" value="Anual">
+                <span class="ct"><strong>Reinicia anual</strong><span>Nuevo conteo cada año.</span></span>
+              </label>
+            </div>
+          </section>
+
+          <!-- SECTION 5 -->
+          <section class="section" id="s5" data-section>
+            <h2>5) Casos de validación clínica <span class="tag">Prueba de fuego</span></h2>
+            <p class="lead">
+              Estos casos son para validar que la automatización coincide con lo esperado (DV + Dx + alertas).
+            </p>
+
+            <div class="sep"></div>
+            <h2 style="font-size:14px;margin:0 0 8px;">Caso A · DV (obligatorio) <span class="tag">Ejemplo real</span></h2>
+            <div class="row">
+              <div class="field"><label for="ca_av_od">AV OD</label><input id="ca_av_od" name="ca_av_od" type="text" required maxlength="40" placeholder="Ej: 20/70" /></div>
+              <div class="field"><label for="ca_av_oi">AV OI</label><input id="ca_av_oi" name="ca_av_oi" type="text" required maxlength="40" placeholder="Ej: 20/100" /></div>
+              <div class="field"><label for="ca_est_od">Estenopeico OD (si aplica)</label><input id="ca_est_od" name="ca_est_od" type="text" maxlength="40" placeholder='Ej: "No" o "Sí, 20/50"' /></div>
+              <div class="field"><label for="ca_est_oi">Estenopeico OI (si aplica)</label><input id="ca_est_oi" name="ca_est_oi" type="text" maxlength="40" placeholder='Ej: "No" o "Sí, 20/40"' /></div>
+              <div class="field"><label for="ca_dv_esperado">Salida esperada DV</label><input id="ca_dv_esperado" name="ca_dv_esperado" type="text" required maxlength="40" placeholder="Ej: DV 2" /></div>
+            </div>
+
+            <div class="sep"></div>
+            <h2 style="font-size:14px;margin:0 0 8px;">Caso B · Refracción (obligatorio)</h2>
+            <div class="row">
+              <div class="field"><label for="cb_ref_od">Refracción OD (ESF/CIL/EJE)</label><input id="cb_ref_od" name="cb_ref_od" type="text" required maxlength="80" placeholder="Ej: -2.00 / -1.00 x 10" /></div>
+              <div class="field"><label for="cb_ref_oi">Refracción OI (ESF/CIL/EJE)</label><input id="cb_ref_oi" name="cb_ref_oi" type="text" required maxlength="80" placeholder="Ej: +0.50 / -0.75 x 90" /></div>
+              <div class="field"><label for="cb_dx_od_esperado">Salida esperada Dx OD</label><input id="cb_dx_od_esperado" name="cb_dx_od_esperado" type="text" required maxlength="100" placeholder="Ej: Miopía con astigmatismo" /></div>
+              <div class="field"><label for="cb_dx_oi_esperado">Salida esperada Dx OI</label><input id="cb_dx_oi_esperado" name="cb_dx_oi_esperado" type="text" required maxlength="100" placeholder="Ej: Hipermetropía leve" /></div>
+            </div>
+
+            <div class="sep"></div>
+            <h2 style="font-size:14px;margin:0 0 8px;">Caso C · Alertas (obligatorio)</h2>
+            <div class="row">
+              <div class="field"><label for="cc_pio_od">PIO OD</label><input id="cc_pio_od" name="cc_pio_od" type="number" required min="0" max="80" placeholder="Ej: 18" /></div>
+              <div class="field"><label for="cc_pio_oi">PIO OI</label><input id="cc_pio_oi" name="cc_pio_oi" type="number" required min="0" max="80" placeholder="Ej: 26" /></div>
+              <div class="field"><label for="cc_kp_od">Kp OD</label><input id="cc_kp_od" name="cc_kp_od" type="text" required maxlength="40" placeholder="Ej: 44.00" /></div>
+              <div class="field"><label for="cc_kp_oi">Kp OI</label><input id="cc_kp_oi" name="cc_kp_oi" type="text" required maxlength="40" placeholder="Ej: 46.25" /></div>
+              <div class="field"><label for="cc_ret_od">Reflejo retina OD</label><input id="cc_ret_od" name="cc_ret_od" type="text" required maxlength="40" placeholder="Ej: Rojo" /></div>
+              <div class="field"><label for="cc_ret_oi">Reflejo retina OI</label><input id="cc_ret_oi" name="cc_ret_oi" type="text" required maxlength="40" placeholder="Ej: Amarillo" /></div>
+              <div class="field"><label for="cc_alerta_pio_od_esperada">Salida esperada alerta PIO OD</label><input id="cc_alerta_pio_od_esperada" name="cc_alerta_pio_od_esperada" type="text" required maxlength="80" placeholder="Ej: Normal" /></div>
+              <div class="field"><label for="cc_alerta_pio_oi_esperada">Salida esperada alerta PIO OI</label><input id="cc_alerta_pio_oi_esperada" name="cc_alerta_pio_oi_esperada" type="text" required maxlength="80" placeholder="Ej: HTO" /></div>
+              <div class="field"><label for="cc_alerta_kp_od_esperada">Salida esperada alerta Kp OD</label><input id="cc_alerta_kp_od_esperada" name="cc_alerta_kp_od_esperada" type="text" required maxlength="80" placeholder="Ej: Normal" /></div>
+              <div class="field"><label for="cc_alerta_kp_oi_esperada">Salida esperada alerta Kp OI</label><input id="cc_alerta_kp_oi_esperada" name="cc_alerta_kp_oi_esperada" type="text" required maxlength="80" placeholder="Ej: Sospecha ectasia" /></div>
+              <div class="field"><label for="cc_alerta_ret_od_esperada">Salida esperada alerta retina OD</label><input id="cc_alerta_ret_od_esperada" name="cc_alerta_ret_od_esperada" type="text" required maxlength="80" placeholder="Ej: Normal (Rojo)" /></div>
+              <div class="field"><label for="cc_alerta_ret_oi_esperada">Salida esperada alerta retina OI</label><input id="cc_alerta_ret_oi_esperada" name="cc_alerta_ret_oi_esperada" type="text" required maxlength="80" placeholder="Ej: Anormal (Amarillo)" /></div>
+            </div>
+
+            <div class="sep"></div>
+            <h2 style="font-size:14px;margin:0 0 8px;">Caso D · Combinado (opcional)</h2>
+            <div class="row">
+              <div class="field">
+                <label for="cd_entrada">Entrada completa</label>
+                <textarea id="cd_entrada" name="cd_entrada" placeholder="AV OD/OI, estenopeico OD/OI, refracción OD/OI, PIO OD/OI, Kp OD/OI, retina OD/OI"></textarea>
+              </div>
+              <div class="field">
+                <label for="cd_salida">Salida esperada completa</label>
+                <textarea id="cd_salida" name="cd_salida" placeholder="DV, Dx OD, Dx OI, alertas"></textarea>
+              </div>
+            </div>
+
+            <div class="note">
+              <strong>Tip rápido:</strong> si algún criterio cambia “según contexto”, escríbalo como excepción (p. ej. “en pediatría…”).
+            </div>
+          </section>
+        </main>
       </div>
-    </div>
 
-    <div class="box">
-      <h2>2) Diagnostico refractivo automatico</h2>
-      <p class="small">Para determinar automaticamente: Miopia / Hipermetropia / Astigmatismo / Emetropia.</p>
-
-      <div class="row">
-        <div class="field">
-          <label for="emetropia_rango">2.1 Definicion exacta de emetropia (rango)</label>
-          <input id="emetropia_rango" name="emetropia_rango" type="text" required maxlength="160" placeholder="Ej: ESF entre -0.50 y +0.50" />
-        </div>
-        <div class="field">
-          <label for="miopia_regla">Regla exacta para Miopia</label>
-          <input id="miopia_regla" name="miopia_regla" type="text" required maxlength="160" placeholder="Ej: ESF < -0.50" />
-        </div>
-        <div class="field">
-          <label for="hipermetropia_regla">Regla exacta para Hipermetropia</label>
-          <input id="hipermetropia_regla" name="hipermetropia_regla" type="text" required maxlength="160" placeholder="Ej: ESF > +0.50" />
-        </div>
-        <div class="field">
-          <label for="astigmatismo_regla">Regla exacta para Astigmatismo</label>
-          <input id="astigmatismo_regla" name="astigmatismo_regla" type="text" required maxlength="160" placeholder="Ej: |CIL| >= 0.75" />
-        </div>
-      </div>
-
-      <p class="small"><strong>2.2</strong> La clasificacion se basa en:</p>
-      <label class="opt"><input type="radio" name="refraccion_base" value="Esfera (ESF)" required /> Esfera (ESF)</label>
-      <label class="opt"><input type="radio" name="refraccion_base" value="Equivalente esferico (EE)" /> Equivalente esferico (EE)</label>
-      <label class="opt"><input type="radio" name="refraccion_base" value="Otro" /> Otro</label>
-      <div class="field">
-        <label for="refraccion_base_otro">Si eligio "Otro", explique:</label>
-        <input id="refraccion_base_otro" name="refraccion_base_otro" type="text" maxlength="240" placeholder="Ej: ESF para eje principal y CIL para subtipo" />
-      </div>
-
-      <div class="field">
-        <label for="refraccion_combinacion">2.3 Si hay combinacion, formato de salida deseado</label>
-        <input id="refraccion_combinacion" name="refraccion_combinacion" type="text" required maxlength="160" placeholder='Ej: "Miopia con astigmatismo"' />
-      </div>
-
-      <div class="field">
-        <label for="refraccion_notas">Notas / aclaraciones refraccion (opcional)</label>
-        <textarea id="refraccion_notas" name="refraccion_notas"></textarea>
-      </div>
-    </div>
-
-    <div class="box">
-      <h2>3) Imagenes (segmento anterior / fondo de ojo / otro - OD/OI)</h2>
-
-      <p class="small"><strong>3.1</strong> Permitir multiples imagenes por rubro y ojo?</p>
-      <label class="opt"><input type="radio" name="imagenes_multiples" value="Si" required /> Si (ej: 3 fotos Fondo de Ojo OD)</label>
-      <label class="opt"><input type="radio" name="imagenes_multiples" value="No" /> No (solo 1 por rubro y ojo)</label>
-
-      <div class="field">
-        <label for="imagenes_notas">Notas / aclaraciones imagenes (opcional)</label>
-        <textarea id="imagenes_notas" name="imagenes_notas"></textarea>
-      </div>
-    </div>
-
-    <div class="box">
-      <h2>4) Reglas de integridad y folio interno</h2>
-
-      <p class="small"><strong>4.1</strong> Regla exacta para rechazar duplicado de paciente</p>
-      <label class="opt"><input type="checkbox" name="dup_reglas[]" value="Telefono exacto (solo digitos)" /> Telefono exacto (comparando solo digitos)</label>
-      <label class="opt"><input type="checkbox" name="dup_reglas[]" value="Correo exacto en minusculas" /> Correo exacto (normalizado en minusculas)</label>
-      <label class="opt"><input type="checkbox" name="dup_reglas[]" value="Nombre completo normalizado + fecha de nacimiento exacta" /> Nombre completo normalizado + fecha de nacimiento exacta</label>
-      <label class="opt"><input type="checkbox" name="dup_reglas[]" value="Nombre completo normalizado + fecha de nacimiento + sexo" /> Nombre completo normalizado + fecha de nacimiento + sexo</label>
-      <div class="field">
-        <label for="dup_regla_final">Regla final exacta que debe aplicar el sistema (obligatoria)</label>
-        <textarea id="dup_regla_final" name="dup_regla_final" required placeholder="Escribe la regla final unica para rechazo de duplicados."></textarea>
-      </div>
-      <p class="hint">
-        "Nombre completo normalizado" significa: quitar acentos, mayusculas/minusculas iguales y sin espacios dobles.
+      <p class="footer">
+        Gracias, Doc. Con esto dejamos la automatización alineada con su criterio clínico, y evitamos ajustes después.
       </p>
 
-      <div class="sep"></div>
-
-      <p class="small"><strong>4.2</strong> Formato del folio interno de paciente</p>
-      <div class="row">
-        <div class="field">
-          <label for="folio_prefijo">Prefijo</label>
-          <input id="folio_prefijo" name="folio_prefijo" type="text" required maxlength="16" placeholder="Ej: VC-P-" />
-        </div>
-        <div class="field">
-          <label for="folio_digitos">Cantidad de digitos</label>
-          <input id="folio_digitos" name="folio_digitos" type="number" required min="1" max="10" value="4" placeholder="Ej: 4" />
-        </div>
-        <div class="field">
-          <label for="folio_inicio">Valor inicial</label>
-          <input id="folio_inicio" name="folio_inicio" type="number" required min="1" value="1" placeholder="Ej: 1" />
+      <div class="actions">
+        <div class="actions-inner">
+          <div class="summary" aria-live="polite">
+            <span class="kpi">Campos obligatorios: <strong id="kpiReq">0</strong></span>
+            <span class="kpi">Completados: <strong id="kpiDone">0</strong></span>
+            <span class="kpi">Pendientes: <strong id="kpiLeft">0</strong></span>
+          </div>
+          <div class="btns">
+            <button type="button" class="ghost" id="btnTop" title="Subir al inicio">↑ Inicio</button>
+            <button type="button" id="btnNext" title="Ir a la siguiente sección">Siguiente sección →</button>
+            <button type="submit" class="primary" id="btnSubmit">Enviar respuestas</button>
+          </div>
         </div>
       </div>
-      <div class="preview-block">
-        <div class="small"><strong>Vista previa del folio:</strong></div>
-        <div id="folio_preview" class="folio-example">VC-P-0001</div>
-      </div>
-      <label class="opt"><input type="radio" name="folio_reinicio" value="Nunca" required /> Nunca reinicia</label>
-      <label class="opt"><input type="radio" name="folio_reinicio" value="Anual" /> Reinicia cada año</label>
-    </div>
+    </form>
+  </div>
 
-    <div class="box">
-      <h2>5) Casos de validacion clinica</h2>
-      <p class="small">
-        Complete los siguientes casos para validar los calculos de DV, diagnostico refractivo y alertas.
-      </p>
-
-      <div class="sep"></div>
-      <h3>Caso A - DV (obligatorio)</h3>
-      <div class="case-grid">
-        <div class="field"><label for="ca_av_od">AV OD</label><input id="ca_av_od" name="ca_av_od" type="text" required maxlength="40" placeholder="Ej: 20/70" /></div>
-        <div class="field"><label for="ca_av_oi">AV OI</label><input id="ca_av_oi" name="ca_av_oi" type="text" required maxlength="40" placeholder="Ej: 20/100" /></div>
-        <div class="field"><label for="ca_est_od">Estenopeico OD (si aplica)</label><input id="ca_est_od" name="ca_est_od" type="text" maxlength="40" placeholder='Ej: "No" o "Si, 20/50"' /></div>
-        <div class="field"><label for="ca_est_oi">Estenopeico OI (si aplica)</label><input id="ca_est_oi" name="ca_est_oi" type="text" maxlength="40" placeholder='Ej: "No" o "Si, 20/40"' /></div>
-        <div class="field"><label for="ca_dv_esperado">Salida esperada DV</label><input id="ca_dv_esperado" name="ca_dv_esperado" type="text" required maxlength="40" placeholder="Ej: DV 2" /></div>
-      </div>
-
-      <div class="sep"></div>
-      <h3>Caso B - Refraccion (obligatorio)</h3>
-      <div class="case-grid">
-        <div class="field"><label for="cb_ref_od">Refraccion OD (ESF/CIL/EJE)</label><input id="cb_ref_od" name="cb_ref_od" type="text" required maxlength="80" placeholder="Ej: -2.00 / -1.00 x 10" /></div>
-        <div class="field"><label for="cb_ref_oi">Refraccion OI (ESF/CIL/EJE)</label><input id="cb_ref_oi" name="cb_ref_oi" type="text" required maxlength="80" placeholder="Ej: +0.50 / -0.75 x 90" /></div>
-        <div class="field"><label for="cb_dx_od_esperado">Salida esperada Dx OD</label><input id="cb_dx_od_esperado" name="cb_dx_od_esperado" type="text" required maxlength="100" placeholder="Ej: Miopia con astigmatismo" /></div>
-        <div class="field"><label for="cb_dx_oi_esperado">Salida esperada Dx OI</label><input id="cb_dx_oi_esperado" name="cb_dx_oi_esperado" type="text" required maxlength="100" placeholder="Ej: Hipermetropia leve" /></div>
-      </div>
-
-      <div class="sep"></div>
-      <h3>Caso C - Alertas (obligatorio)</h3>
-      <div class="case-grid">
-        <div class="field"><label for="cc_pio_od">PIO OD</label><input id="cc_pio_od" name="cc_pio_od" type="number" required min="0" max="80" placeholder="Ej: 18" /></div>
-        <div class="field"><label for="cc_pio_oi">PIO OI</label><input id="cc_pio_oi" name="cc_pio_oi" type="number" required min="0" max="80" placeholder="Ej: 26" /></div>
-        <div class="field"><label for="cc_kp_od">Kp OD</label><input id="cc_kp_od" name="cc_kp_od" type="text" required maxlength="40" placeholder="Ej: 44.00" /></div>
-        <div class="field"><label for="cc_kp_oi">Kp OI</label><input id="cc_kp_oi" name="cc_kp_oi" type="text" required maxlength="40" placeholder="Ej: 46.25" /></div>
-        <div class="field"><label for="cc_ret_od">Reflejo retina OD</label><input id="cc_ret_od" name="cc_ret_od" type="text" required maxlength="40" placeholder="Ej: Rojo" /></div>
-        <div class="field"><label for="cc_ret_oi">Reflejo retina OI</label><input id="cc_ret_oi" name="cc_ret_oi" type="text" required maxlength="40" placeholder="Ej: Amarillo" /></div>
-        <div class="field"><label for="cc_alerta_pio_od_esperada">Salida esperada alerta PIO OD</label><input id="cc_alerta_pio_od_esperada" name="cc_alerta_pio_od_esperada" type="text" required maxlength="80" placeholder="Ej: Normal" /></div>
-        <div class="field"><label for="cc_alerta_pio_oi_esperada">Salida esperada alerta PIO OI</label><input id="cc_alerta_pio_oi_esperada" name="cc_alerta_pio_oi_esperada" type="text" required maxlength="80" placeholder="Ej: HTO" /></div>
-        <div class="field"><label for="cc_alerta_kp_od_esperada">Salida esperada alerta Kp OD</label><input id="cc_alerta_kp_od_esperada" name="cc_alerta_kp_od_esperada" type="text" required maxlength="80" placeholder="Ej: Normal" /></div>
-        <div class="field"><label for="cc_alerta_kp_oi_esperada">Salida esperada alerta Kp OI</label><input id="cc_alerta_kp_oi_esperada" name="cc_alerta_kp_oi_esperada" type="text" required maxlength="80" placeholder="Ej: Sospecha ectasia" /></div>
-        <div class="field"><label for="cc_alerta_ret_od_esperada">Salida esperada alerta retina OD</label><input id="cc_alerta_ret_od_esperada" name="cc_alerta_ret_od_esperada" type="text" required maxlength="80" placeholder="Ej: Normal (Rojo)" /></div>
-        <div class="field"><label for="cc_alerta_ret_oi_esperada">Salida esperada alerta retina OI</label><input id="cc_alerta_ret_oi_esperada" name="cc_alerta_ret_oi_esperada" type="text" required maxlength="80" placeholder="Ej: Anormal (Amarillo)" /></div>
-      </div>
-
-      <div class="sep"></div>
-      <h3>Caso D - Combinado (opcional)</h3>
-      <div class="field">
-        <label for="cd_entrada">Entrada completa</label>
-        <textarea id="cd_entrada" name="cd_entrada" placeholder="AV OD/OI, estenopeico OD/OI, refraccion OD/OI, PIO OD/OI, Kp OD/OI, retina OD/OI"></textarea>
-      </div>
-      <div class="field">
-        <label for="cd_salida">Salida esperada completa</label>
-        <textarea id="cd_salida" name="cd_salida" placeholder="DV, Dx OD, Dx OI, alertas"></textarea>
-      </div>
-    </div>
-
-    <div class="actions">
-      <button type="submit">Enviar respuestas</button>
-    </div>
-  </form>
-
-  <p class="footer">
-    Gracias, Doc. Con estas respuestas dejamos la automatizacion alineada a su criterio clinico.
-    <br />
-  </p>
   <script>
-    (function () {
+    (function(){
+      const form = document.getElementById('form');
+
+      // --- Folio preview ---
       const prefixEl = document.getElementById('folio_prefijo');
       const digitsEl = document.getElementById('folio_digitos');
-      const startEl = document.getElementById('folio_inicio');
-      const previewEl = document.getElementById('folio_preview');
+      const startEl  = document.getElementById('folio_inicio');
+      const previewEl= document.getElementById('folio_preview');
 
-      if (!prefixEl || !digitsEl || !startEl || !previewEl) return;
-
-      function clampInt(value, fallback, min, max) {
+      function clampInt(value, fallback, min, max){
         const n = Number.parseInt(String(value), 10);
         if (Number.isNaN(n)) return fallback;
         return Math.min(max, Math.max(min, n));
       }
-
-      function renderPreview() {
+      function renderPreview(){
+        if(!prefixEl || !digitsEl || !startEl || !previewEl) return;
         const prefix = (prefixEl.value || '').trim();
         const digits = clampInt(digitsEl.value, 4, 1, 10);
-        const start = clampInt(startEl.value, 1, 1, 999999999);
-        const serial = String(start).padStart(digits, '0');
-        previewEl.textContent = `${prefix}${serial}`;
+        const start  = clampInt(startEl.value, 1, 1, 999999999);
+        previewEl.textContent = `${prefix}${String(start).padStart(digits, '0')}`;
+      }
+      [prefixEl, digitsEl, startEl].forEach(el => el && el.addEventListener('input', renderPreview));
+      renderPreview();
+
+      // --- Progressive disclosure (show/hide dependent fields) ---
+      const depFields = Array.from(document.querySelectorAll('[data-depends-on]'));
+      function getRadioValue(name){
+        const el = document.querySelector(`input[type="radio"][name="${CSS.escape(name)}"]:checked`);
+        return el ? el.value : '';
+      }
+      function updateDeps(){
+        depFields.forEach(f => {
+          const name = f.getAttribute('data-depends-on');
+          const showWhen = f.getAttribute('data-show-when');
+          const v = getRadioValue(name);
+          const show = v === showWhen;
+          f.style.display = show ? '' : 'none';
+          // Si se oculta, limpiamos y quitamos error visual
+          if(!show){
+            const inputs = f.querySelectorAll('input, textarea, select');
+            inputs.forEach(i => {
+              i.value = '';
+              i.removeAttribute('aria-invalid');
+              f.classList.remove('invalid');
+              const msg = f.querySelector('.msg.err');
+              if(msg) msg.remove();
+            });
+          }
+        });
+      }
+      form.addEventListener('change', updateDeps);
+      updateDeps();
+
+      // --- Autosave local (reduce ansiedad: "no se me va a borrar") ---
+      const autosaveKey = 'vc_config_questionnaire_v1';
+      const autosaveState = document.getElementById('autosaveState');
+      const autosavePill = document.getElementById('autosavePill');
+
+      function setAutosave(label, ok=true){
+        if(!autosaveState) return;
+        autosaveState.textContent = label;
+        if(autosavePill){
+          autosavePill.style.borderColor = ok ? 'rgba(125,241,214,.35)' : 'rgba(255,122,122,.35)';
+        }
       }
 
-      prefixEl.addEventListener('input', renderPreview);
-      digitsEl.addEventListener('input', renderPreview);
-      startEl.addEventListener('input', renderPreview);
-      renderPreview();
+      function serializeForm(){
+        const fd = new FormData(form);
+        const obj = {};
+        for(const [k,v] of fd.entries()){
+          // dup_reglas[] -> array
+          if(k.endsWith('[]')){
+            obj[k] = obj[k] || [];
+            obj[k].push(v);
+          }else{
+            obj[k] = v;
+          }
+        }
+        return obj;
+      }
+
+      function restoreForm(){
+        try{
+          const raw = localStorage.getItem(autosaveKey);
+          if(!raw) return;
+          const data = JSON.parse(raw);
+
+          // set simple fields
+          Object.keys(data).forEach(k => {
+            const val = data[k];
+
+            // arrays (checkbox lists)
+            if(Array.isArray(val)){
+              val.forEach(item => {
+                const cb = form.querySelector(`input[type="checkbox"][name="${CSS.escape(k)}"][value="${CSS.escape(item)}"]`);
+                if(cb) cb.checked = true;
+              });
+              return;
+            }
+
+            // radios
+            const radios = form.querySelectorAll(`input[type="radio"][name="${CSS.escape(k)}"]`);
+            if(radios && radios.length){
+              radios.forEach(r => r.checked = (r.value === val));
+              return;
+            }
+
+            // normal inputs/textarea
+            const el = form.querySelector(`[name="${CSS.escape(k)}"]`);
+            if(el) el.value = val;
+          });
+
+          updateDeps();
+          renderPreview();
+          setAutosave('Restaurado', true);
+        }catch(e){
+          setAutosave('Error', false);
+        }
+      }
+
+      let autosaveTimer = null;
+      function scheduleAutosave(){
+        setAutosave('Guardando…', true);
+        clearTimeout(autosaveTimer);
+        autosaveTimer = setTimeout(() => {
+          try{
+            const data = serializeForm();
+            localStorage.setItem(autosaveKey, JSON.stringify(data));
+            setAutosave('Guardado', true);
+          }catch(e){
+            setAutosave('Error', false);
+          }
+        }, 350);
+      }
+      form.addEventListener('input', scheduleAutosave);
+      form.addEventListener('change', scheduleAutosave);
+      restoreForm();
+
+      // --- Required progress + per-section completion ---
+      const reqEls = Array.from(form.querySelectorAll('[required]'))
+        .filter(el => el.name && el.type !== 'hidden');
+
+      const reqCountEl = document.getElementById('reqCount');
+      const doneCountEl = document.getElementById('doneCount');
+      const progressFill = document.getElementById('progressFill');
+
+      const kpiReq = document.getElementById('kpiReq');
+      const kpiDone = document.getElementById('kpiDone');
+      const kpiLeft = document.getElementById('kpiLeft');
+
+      const sections = Array.from(document.querySelectorAll('[data-section]'));
+      const navLinks = Array.from(document.querySelectorAll('.nav a[data-nav]'));
+      const activeSectionEl = document.getElementById('activeSection');
+
+      function isVisible(el){
+        // visible if not inside display:none container
+        const style = window.getComputedStyle(el);
+        if(style.display === 'none' || style.visibility === 'hidden') return false;
+        // also if any parent has display:none
+        let p = el.parentElement;
+        while(p){
+          const ps = window.getComputedStyle(p);
+          if(ps.display === 'none') return false;
+          p = p.parentElement;
+        }
+        return true;
+      }
+
+      function isFilled(el){
+        if(!isVisible(el)) return true; // fields hidden by logic shouldn't block progress
+        if(el.type === 'radio'){
+          const g = form.querySelector(`input[type="radio"][name="${CSS.escape(el.name)}"]:checked`);
+          return !!g;
+        }
+        if(el.type === 'checkbox'){
+          return el.checked;
+        }
+        return String(el.value || '').trim().length > 0;
+      }
+
+      function updateProgress(){
+        const requiredVisible = reqEls.filter(isVisible);
+        const total = requiredVisible.length;
+
+        let done = 0;
+        requiredVisible.forEach(el => { if(isFilled(el)) done++; });
+
+        const pct = total ? Math.round((done/total)*100) : 100;
+
+        if(reqCountEl) reqCountEl.textContent = String(total);
+        if(doneCountEl) doneCountEl.textContent = String(done);
+        if(progressFill) progressFill.style.width = pct + '%';
+
+        if(kpiReq) kpiReq.textContent = String(total);
+        if(kpiDone) kpiDone.textContent = String(done);
+        if(kpiLeft) kpiLeft.textContent = String(Math.max(0, total - done));
+
+        // per-section mini progress + dot states
+        sections.forEach(sec => {
+          const id = sec.id;
+          const reqInSec = Array.from(sec.querySelectorAll('[required]')).filter(el => el.name && el.type !== 'hidden' && isVisible(el));
+          const totalS = reqInSec.length;
+          let doneS = 0;
+          reqInSec.forEach(el => { if(isFilled(el)) doneS++; });
+
+          const pctS = totalS ? Math.round((doneS/totalS)*100) : 100;
+
+          const mini = document.getElementById('mini-' + id);
+          if(mini) mini.textContent = pctS + '%';
+
+          const dot = document.getElementById('dot-' + id);
+          if(dot){
+            dot.classList.remove('done','partial');
+            if(pctS === 100) dot.classList.add('done');
+            else if(pctS > 0) dot.classList.add('partial');
+          }
+        });
+      }
+
+      form.addEventListener('input', updateProgress);
+      form.addEventListener('change', updateProgress);
+      updateDeps();
+      updateProgress();
+
+      // --- Active section highlight (scroll spy) ---
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if(entry.isIntersecting){
+            const id = entry.target.id;
+            navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('data-nav') === id));
+            const idx = sections.findIndex(s => s.id === id);
+            if(activeSectionEl && idx >= 0) activeSectionEl.textContent = String(idx + 1);
+          }
+        });
+      }, { rootMargin: "-30% 0px -60% 0px", threshold: 0.01 });
+
+      sections.forEach(s => observer.observe(s));
+
+      // Smooth scroll for nav links + top button
+      navLinks.forEach(a => {
+        a.addEventListener('click', (e) => {
+          e.preventDefault();
+          const id = a.getAttribute('href');
+          const target = document.querySelector(id);
+          if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
+        });
+      });
+
+      const btnTop = document.getElementById('btnTop');
+      btnTop && btnTop.addEventListener('click', () => {
+        document.getElementById('top').scrollIntoView({behavior:'smooth', block:'start'});
+      });
+
+      const btnNext = document.getElementById('btnNext');
+      btnNext && btnNext.addEventListener('click', () => {
+        const active = document.querySelector('.nav a.active');
+        const currentId = active ? active.getAttribute('data-nav') : 's1';
+        const idx = sections.findIndex(s => s.id === currentId);
+        const next = sections[Math.min(sections.length - 1, idx + 1)];
+        if(next) next.scrollIntoView({behavior:'smooth', block:'start'});
+      });
+
+      // --- Gentle validation (on submit) ---
+      function clearInlineErrors(){
+        document.querySelectorAll('.invalid').forEach(w => w.classList.remove('invalid'));
+        document.querySelectorAll('.msg.err').forEach(m => m.remove());
+      }
+      function showError(el, text){
+        const wrap = el.closest('.field') || el.parentElement;
+        if(!wrap) return;
+        wrap.classList.add('invalid');
+        el.setAttribute('aria-invalid','true');
+        const m = document.createElement('div');
+        m.className = 'msg err';
+        m.textContent = text;
+        wrap.appendChild(m);
+      }
+
+      form.addEventListener('submit', (e) => {
+        clearInlineErrors();
+        updateDeps();
+        updateProgress();
+
+        // validate only visible required
+        const requiredVisible = reqEls.filter(isVisible);
+        let firstBad = null;
+
+        // validate radios by group (avoid duplicate errors)
+        const radioGroups = new Set(requiredVisible.filter(x => x.type === 'radio').map(x => x.name));
+        radioGroups.forEach(name => {
+          const checked = form.querySelector(`input[type="radio"][name="${CSS.escape(name)}"]:checked`);
+          if(!checked){
+            const any = form.querySelector(`input[type="radio"][name="${CSS.escape(name)}"]`);
+            if(any){
+              showError(any, 'Seleccione una opción para continuar.');
+              firstBad = firstBad || any;
+            }
+          }
+        });
+
+        requiredVisible.forEach(el => {
+          if(el.type === 'radio') return;
+          if(!isFilled(el)){
+            showError(el, 'Este campo es obligatorio.');
+            firstBad = firstBad || el;
+          }
+        });
+
+        if(firstBad){
+          e.preventDefault();
+          // scroll to the section containing the first error
+          const sec = firstBad.closest('[data-section]');
+          if(sec) sec.scrollIntoView({behavior:'smooth', block:'start'});
+          setTimeout(() => firstBad.focus({preventScroll:true}), 250);
+        }else{
+          // successful submit -> clear autosave so next time it's clean
+          try{ localStorage.removeItem(autosaveKey); }catch(_){}
+        }
+      });
     })();
   </script>
 </body>
