@@ -257,53 +257,52 @@
     </div>
 
     <div class="box">
-      <h2>5) Casos clinicos esperados (cerrados para validar calculos)</h2>
+      <h2>5) Casos de validacion (version ligera)</h2>
       <p class="small">
-        Complete 3 casos concretos. Cada caso debe ser totalmente reproducible con datos numericos/seleccionados.
-        Evite descripciones generales.
+        Para reducir carga, capture 3 casos cortos por objetivo: DV, Refraccion y Alertas.
+        Solo se piden los datos minimos para validar cada calculo.
       </p>
 
       <div class="sep"></div>
-      <h3>Caso 1 (obligatorio)</h3>
+      <h3>Caso A - DV (obligatorio)</h3>
       <div class="case-grid">
-        <div class="field"><label for="c1_av_od">AV OD (sin estenopeico)</label><input id="c1_av_od" name="c1_av_od" type="text" required maxlength="40" placeholder="Ej: 20/70" /></div>
-        <div class="field"><label for="c1_av_oi">AV OI (sin estenopeico)</label><input id="c1_av_oi" name="c1_av_oi" type="text" required maxlength="40" placeholder="Ej: 20/100" /></div>
-        <div class="field"><label for="c1_estenopeico_od">Estenopeico OD</label><input id="c1_estenopeico_od" name="c1_estenopeico_od" type="text" maxlength="40" placeholder='Ej: "No" o "Si, 20/50"' /></div>
-        <div class="field"><label for="c1_estenopeico_oi">Estenopeico OI</label><input id="c1_estenopeico_oi" name="c1_estenopeico_oi" type="text" maxlength="40" /></div>
-        <div class="field"><label for="c1_refraccion_od">Refraccion OD (ESF/CIL/EJE)</label><input id="c1_refraccion_od" name="c1_refraccion_od" type="text" required maxlength="80" placeholder="Ej: -2.00 / -1.00 x 10" /></div>
-        <div class="field"><label for="c1_refraccion_oi">Refraccion OI (ESF/CIL/EJE)</label><input id="c1_refraccion_oi" name="c1_refraccion_oi" type="text" required maxlength="80" /></div>
-        <div class="field"><label for="c1_pio_od">PIO OD</label><input id="c1_pio_od" name="c1_pio_od" type="number"  /></div>
-        <div class="field"><label for="c1_pio_oi">PIO OI</label><input id="c1_pio_oi" name="c1_pio_oi" type="number"  /></div>
-        <div class="field"><label for="c1_retina_od">Reflejo retina OD</label><input id="c1_retina_od" name="c1_retina_od" type="text" required maxlength="40" placeholder="Ej: Rojo" /></div>
-        <div class="field"><label for="c1_retina_oi">Reflejo retina OI</label><input id="c1_retina_oi" name="c1_retina_oi" type="text" required maxlength="40" placeholder="Ej: Amarillo" /></div>
-      </div>
-      <div class="case-grid">
-        <div class="field"><label for="c1_esperado_dv">Salida esperada DV</label><input id="c1_esperado_dv" name="c1_esperado_dv" type="text" required maxlength="40" placeholder="Ej: DV 2" /></div>
-        <div class="field"><label for="c1_esperado_dx_od">Salida esperada Dx OD</label><input id="c1_esperado_dx_od" name="c1_esperado_dx_od" type="text" required maxlength="80" /></div>
-        <div class="field"><label for="c1_esperado_dx_oi">Salida esperada Dx OI</label><input id="c1_esperado_dx_oi" name="c1_esperado_dx_oi" type="text" required maxlength="80" /></div>
-        <div class="field"><label for="c1_esperado_alertas">Salida esperada Alertas</label><input id="c1_esperado_alertas" name="c1_esperado_alertas" type="text" required maxlength="120" placeholder="Ej: PIO OI alta; Retina OI anormal" /></div>
+        <div class="field"><label for="ca_av_od">AV OD</label><input id="ca_av_od" name="ca_av_od" type="text" required maxlength="40" placeholder="Ej: 20/70" /></div>
+        <div class="field"><label for="ca_av_oi">AV OI</label><input id="ca_av_oi" name="ca_av_oi" type="text" required maxlength="40" placeholder="Ej: 20/100" /></div>
+        <div class="field"><label for="ca_est_od">Estenopeico OD (si aplica)</label><input id="ca_est_od" name="ca_est_od" type="text" maxlength="40" placeholder='Ej: "No" o "Si, 20/50"' /></div>
+        <div class="field"><label for="ca_est_oi">Estenopeico OI (si aplica)</label><input id="ca_est_oi" name="ca_est_oi" type="text" maxlength="40" /></div>
+        <div class="field"><label for="ca_dv_esperado">Salida esperada DV</label><input id="ca_dv_esperado" name="ca_dv_esperado" type="text" required maxlength="40" placeholder="Ej: DV 2" /></div>
       </div>
 
       <div class="sep"></div>
-      <h3>Caso 2 (obligatorio)</h3>
-      <div class="field">
-        <label for="c2_entrada">Entrada completa (mismo formato del Caso 1)</label>
-        <textarea id="c2_entrada" name="c2_entrada" required placeholder="AV OD=?, AV OI=?, estenopeico OD/OI=?, refraccion OD=?, refraccion OI=?, PIO OD/OI=?, retina OD/OI=?"></textarea>
-      </div>
-      <div class="field">
-        <label for="c2_salida">Salida esperada completa</label>
-        <textarea id="c2_salida" name="c2_salida" required placeholder="DV=?, Dx OD=?, Dx OI=?, Alertas=?"></textarea>
+      <h3>Caso B - Refraccion (obligatorio)</h3>
+      <div class="case-grid">
+        <div class="field"><label for="cb_ref_od">Refraccion OD (ESF/CIL/EJE)</label><input id="cb_ref_od" name="cb_ref_od" type="text" required maxlength="80" placeholder="Ej: -2.00 / -1.00 x 10" /></div>
+        <div class="field"><label for="cb_ref_oi">Refraccion OI (ESF/CIL/EJE)</label><input id="cb_ref_oi" name="cb_ref_oi" type="text" required maxlength="80" placeholder="Ej: +0.50 / -0.75 x 90" /></div>
+        <div class="field"><label for="cb_dx_od_esperado">Salida esperada Dx OD</label><input id="cb_dx_od_esperado" name="cb_dx_od_esperado" type="text" required maxlength="100" /></div>
+        <div class="field"><label for="cb_dx_oi_esperado">Salida esperada Dx OI</label><input id="cb_dx_oi_esperado" name="cb_dx_oi_esperado" type="text" required maxlength="100" /></div>
       </div>
 
       <div class="sep"></div>
-      <h3>Caso 3 (obligatorio)</h3>
+      <h3>Caso C - Alertas (obligatorio)</h3>
+      <div class="case-grid">
+        <div class="field"><label for="cc_pio_od">PIO OD</label><input id="cc_pio_od" name="cc_pio_od" type="number" required min="0" max="80" /></div>
+        <div class="field"><label for="cc_pio_oi">PIO OI</label><input id="cc_pio_oi" name="cc_pio_oi" type="number" required min="0" max="80" /></div>
+        <div class="field"><label for="cc_kp_od">Kp OD</label><input id="cc_kp_od" name="cc_kp_od" type="text" required maxlength="40" placeholder="Ej: 44.00" /></div>
+        <div class="field"><label for="cc_kp_oi">Kp OI</label><input id="cc_kp_oi" name="cc_kp_oi" type="text" required maxlength="40" placeholder="Ej: 46.25" /></div>
+        <div class="field"><label for="cc_ret_od">Reflejo retina OD</label><input id="cc_ret_od" name="cc_ret_od" type="text" required maxlength="40" placeholder="Ej: Rojo" /></div>
+        <div class="field"><label for="cc_ret_oi">Reflejo retina OI</label><input id="cc_ret_oi" name="cc_ret_oi" type="text" required maxlength="40" placeholder="Ej: Amarillo" /></div>
+        <div class="field"><label for="cc_alertas_esperadas">Salida esperada Alertas</label><input id="cc_alertas_esperadas" name="cc_alertas_esperadas" type="text" required maxlength="140" placeholder="Ej: PIO OI alta; Retina OI anormal" /></div>
+      </div>
+
+      <div class="sep"></div>
+      <h3>Caso D - Combinado (opcional)</h3>
       <div class="field">
-        <label for="c3_entrada">Entrada completa (mismo formato del Caso 1)</label>
-        <textarea id="c3_entrada" name="c3_entrada" required placeholder="AV OD=?, AV OI=?, estenopeico OD/OI=?, refraccion OD=?, refraccion OI=?, PIO OD/OI=?, retina OD/OI=?"></textarea>
+        <label for="cd_entrada">Entrada completa</label>
+        <textarea id="cd_entrada" name="cd_entrada" placeholder="AV OD/OI, estenopeico OD/OI, refraccion OD/OI, PIO OD/OI, Kp OD/OI, retina OD/OI"></textarea>
       </div>
       <div class="field">
-        <label for="c3_salida">Salida esperada completa</label>
-        <textarea id="c3_salida" name="c3_salida" required placeholder="DV=?, Dx OD=?, Dx OI=?, Alertas=?"></textarea>
+        <label for="cd_salida">Salida esperada completa</label>
+        <textarea id="cd_salida" name="cd_salida" placeholder="DV, Dx OD, Dx OI, alertas"></textarea>
       </div>
     </div>
 
