@@ -1227,14 +1227,24 @@
 
       // --- Autosave local (reduce ansiedad: "no se me va a borrar") ---
       const autosaveKey = 'vc_config_questionnaire_v1';
+      const autosaveVersion = 2;
       const autosaveState = document.getElementById('autosaveState');
       const autosavePill = document.getElementById('autosavePill');
+      let isSubmitting = false;
 
       function setAutosave(label, ok=true){
         if(!autosaveState) return;
         autosaveState.textContent = label;
         if(autosavePill){
           autosavePill.style.borderColor = ok ? 'rgba(110,169,140,.38)' : 'rgba(184,74,74,.36)';
+        }
+      }
+
+      function formatTime(ts){
+        try{
+          return new Date(ts).toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' });
+        }catch(_){
+          return '';
         }
       }
 
@@ -1253,11 +1263,35 @@
         return obj;
       }
 
+      function persistAutosave(){
+        try{
+          const payload = {
+            v: autosaveVersion,
+            t: Date.now(),
+            data: serializeForm(),
+          };
+          localStorage.setItem(autosaveKey, JSON.stringify(payload));
+          const hhmm = formatTime(payload.t);
+          setAutosave(hhmm ? `Guardado ${hhmm}` : 'Guardado', true);
+          return true;
+        }catch(e){
+          setAutosave('Error', false);
+          return false;
+        }
+      }
+
       function restoreForm(){
         try{
           const raw = localStorage.getItem(autosaveKey);
           if(!raw) return;
-          const data = JSON.parse(raw);
+          const parsed = JSON.parse(raw);
+          const data = (parsed && typeof parsed === 'object' && parsed.data && typeof parsed.data === 'object')
+            ? parsed.data
+            : parsed;
+          const savedAt = (parsed && typeof parsed === 'object' && typeof parsed.t === 'number')
+            ? parsed.t
+            : null;
+          if(!data || typeof data !== 'object') return;
 
           // set simple fields
           Object.keys(data).forEach(k => {
@@ -1286,7 +1320,8 @@
 
           updateDeps();
           renderPreview();
-          setAutosave('Restaurado', true);
+          const hhmm = savedAt ? formatTime(savedAt) : '';
+          setAutosave(hhmm ? `Restaurado ${hhmm}` : 'Restaurado', true);
         }catch(e){
           setAutosave('Error', false);
         }
@@ -1297,17 +1332,26 @@
         setAutosave('Guardando…', true);
         clearTimeout(autosaveTimer);
         autosaveTimer = setTimeout(() => {
-          try{
-            const data = serializeForm();
-            localStorage.setItem(autosaveKey, JSON.stringify(data));
-            setAutosave('Guardado', true);
-          }catch(e){
-            setAutosave('Error', false);
-          }
+          persistAutosave();
         }, 350);
       }
+
+      function flushAutosave(){
+        if(isSubmitting) return;
+        if(autosaveTimer){
+          clearTimeout(autosaveTimer);
+          autosaveTimer = null;
+        }
+        persistAutosave();
+      }
+
       form.addEventListener('input', scheduleAutosave);
       form.addEventListener('change', scheduleAutosave);
+      window.addEventListener('pagehide', flushAutosave);
+      window.addEventListener('beforeunload', flushAutosave);
+      document.addEventListener('visibilitychange', () => {
+        if(document.visibilityState === 'hidden') flushAutosave();
+      });
       restoreForm();
 
       // --- Required progress + per-section completion ---
@@ -1530,6 +1574,7 @@
           if(sec) sec.scrollIntoView({behavior:'smooth', block:'start'});
           setTimeout(() => firstBad.focus({preventScroll:true}), 250);
         }else{
+          isSubmitting = true;
           // successful submit -> clear autosave so next time it's clean
           try{ localStorage.removeItem(autosaveKey); }catch(_){}
         }
