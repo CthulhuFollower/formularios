@@ -54,6 +54,19 @@
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 10px;
     }
+    .preview-block {
+      margin-top: 10px;
+      border: 1px dashed #bdbdbd;
+      border-radius: 10px;
+      padding: 10px 12px;
+      background: #fafafa;
+    }
+    .folio-example {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
     @media print {
       .hint, .actions, .notice { display: none; }
       body { margin: 10mm; background: #fff; }
@@ -69,17 +82,12 @@
     Regla fija del sistema: "Medico que lo envio" sera texto libre, maximo 80 caracteres.
   </p>
 
-  <div class="notice">
-    Para hacerlo funcional y gratuito en GitHub Pages, este formulario envia respuestas por FormSubmit.
-    Antes de publicarlo, cambia <code>REEMPLAZAR_CORREO@dominio.com</code> por tu correo real.
-  </div>
-
-  <form action="https://formsubmit.co/REEMPLAZAR_CORREO@dominio.com" method="POST">
+  <form action="https://formsubmit.co/julian110101@gmail.com" method="POST">
     <input type="hidden" name="_subject" value="Respuestas cuestionario clinico VisionCeiba" />
     <input type="hidden" name="_template" value="table" />
     <input type="hidden" name="_captcha" value="false" />
 
-    <div class="box">
+    <!-- div class="box">
       <h2>Datos generales</h2>
       <div class="row">
         <div class="field">
@@ -91,7 +99,7 @@
           <input id="fecha_respuesta" name="fecha_respuesta" type="date" required />
         </div>
       </div>
-    </div>
+    </div> -->
 
     <div class="box">
       <h2>1) Clasificacion "DV OMS" (Deficit Visual)</h2>
@@ -203,11 +211,6 @@
       <label class="opt"><input type="radio" name="imagenes_multiples" value="No" /> No (solo 1 por rubro y ojo)</label>
 
       <div class="field">
-        <label for="imagenes_variante_libre"><strong>3.2</strong> Variante de estudio (texto libre, sin catalogo inicial)</label>
-        <textarea id="imagenes_variante_libre" name="imagenes_variante_libre" placeholder="Ej: fluoresceina, midriasis, control, etc."></textarea>
-      </div>
-
-      <div class="field">
         <label for="imagenes_notas">Notas / aclaraciones imagenes (opcional)</label>
         <textarea id="imagenes_notas" name="imagenes_notas"></textarea>
       </div>
@@ -246,13 +249,12 @@
           <input id="folio_inicio" name="folio_inicio" type="number" required min="1" value="1" />
         </div>
       </div>
+      <div class="preview-block">
+        <div class="small"><strong>Vista previa del folio:</strong></div>
+        <div id="folio_preview" class="folio-example">VC-P-0001</div>
+      </div>
       <label class="opt"><input type="radio" name="folio_reinicio" value="Nunca" required /> Nunca reinicia</label>
       <label class="opt"><input type="radio" name="folio_reinicio" value="Anual" /> Reinicia cada anio</label>
-      <label class="opt"><input type="radio" name="folio_reinicio" value="Otro" /> Otro</label>
-      <div class="field">
-        <label for="folio_reinicio_otro">Si eligio "Otro", explique:</label>
-        <input id="folio_reinicio_otro" name="folio_reinicio_otro" type="text" maxlength="120" />
-      </div>
     </div>
 
     <div class="box">
@@ -316,5 +318,34 @@
     <br />
     <span class="hint">Tambien puede imprimir este documento si prefiere llenarlo en papel.</span>
   </p>
+  <script>
+    (function () {
+      const prefixEl = document.getElementById('folio_prefijo');
+      const digitsEl = document.getElementById('folio_digitos');
+      const startEl = document.getElementById('folio_inicio');
+      const previewEl = document.getElementById('folio_preview');
+
+      if (!prefixEl || !digitsEl || !startEl || !previewEl) return;
+
+      function clampInt(value, fallback, min, max) {
+        const n = Number.parseInt(String(value), 10);
+        if (Number.isNaN(n)) return fallback;
+        return Math.min(max, Math.max(min, n));
+      }
+
+      function renderPreview() {
+        const prefix = (prefixEl.value || '').trim();
+        const digits = clampInt(digitsEl.value, 4, 1, 10);
+        const start = clampInt(startEl.value, 1, 1, 999999999);
+        const serial = String(start).padStart(digits, '0');
+        previewEl.textContent = `${prefix}${serial}`;
+      }
+
+      prefixEl.addEventListener('input', renderPreview);
+      digitsEl.addEventListener('input', renderPreview);
+      startEl.addEventListener('input', renderPreview);
+      renderPreview();
+    })();
+  </script>
 </body>
 </html>
