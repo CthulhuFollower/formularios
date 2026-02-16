@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cuestionario clinico - Configuracion del sistema</title>
+  <style>
+    :root { color-scheme: light; }
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; line-height: 1.35; margin: 24px; color: #111; background: #f8f8f8; }
+    h1 { font-size: 22px; margin: 0 0 8px; }
+    h2 { font-size: 17px; margin: 0 0 10px; }
+    h3 { font-size: 15px; margin: 14px 0 8px; }
+    .meta { margin: 0 0 18px; font-size: 14px; color: #333; }
+    .small { font-size: 13px; color: #333; }
+    .hint { font-size: 12px; color: #555; margin-top: 6px; }
+    .box { border: 1px solid #ddd; border-radius: 12px; padding: 16px; margin: 14px 0; background: #fff; }
+    .row { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field > label { font-size: 13px; color: #222; }
+    label.opt { display: block; margin: 6px 0; }
+    input[type="text"], input[type="number"], input[type="date"], select, textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-sizing: border-box;
+      font: inherit;
+      background: #fff;
+    }
+    textarea { min-height: 88px; resize: vertical; }
+    .sep { height: 1px; background: #e6e6e6; margin: 12px 0; }
+    .footer { margin-top: 18px; font-size: 13px; color: #333; }
+    .actions { position: sticky; bottom: 0; background: #f8f8f8; padding: 12px 0 4px; }
+    button {
+      border: 1px solid #111;
+      border-radius: 10px;
+      background: #111;
+      color: #fff;
+      padding: 11px 14px;
+      font: inherit;
+      cursor: pointer;
+    }
+    button:hover { background: #000; }
+    .notice {
+      border: 1px solid #ffd18d;
+      background: #fff8ec;
+      border-radius: 10px;
+      padding: 10px 12px;
+      margin: 12px 0;
+      font-size: 13px;
+    }
+    .case-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 10px;
+    }
+    @media print {
+      .hint, .actions, .notice { display: none; }
+      body { margin: 10mm; background: #fff; }
+      .box { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Cuestionario clinico (para configurar el sistema)</h1>
+  <p class="meta">
+    Objetivo: configurar calculos automaticos (DV OMS, diagnostico refractivo e imagenes) exactamente con su criterio clinico.
+    <br />
+    Regla fija del sistema: "Medico que lo envio" sera texto libre, maximo 80 caracteres.
+  </p>
+
+  <div class="notice">
+    Para hacerlo funcional y gratuito en GitHub Pages, este formulario envia respuestas por FormSubmit.
+    Antes de publicarlo, cambia <code>REEMPLAZAR_CORREO@dominio.com</code> por tu correo real.
+  </div>
+
+  <form action="https://formsubmit.co/REEMPLAZAR_CORREO@dominio.com" method="POST">
+    <input type="hidden" name="_subject" value="Respuestas cuestionario clinico VisionCeiba" />
+    <input type="hidden" name="_template" value="table" />
+    <input type="hidden" name="_captcha" value="false" />
+
+    <div class="box">
+      <h2>Datos generales</h2>
+      <div class="row">
+        <div class="field">
+          <label for="doctor_nombre">Doctor(a)</label>
+          <input id="doctor_nombre" name="doctor_nombre" type="text" required maxlength="120" />
+        </div>
+        <div class="field">
+          <label for="fecha_respuesta">Fecha</label>
+          <input id="fecha_respuesta" name="fecha_respuesta" type="date" required />
+        </div>
+      </div>
+    </div>
+
+    <div class="box">
+      <h2>1) Clasificacion "DV OMS" (Deficit Visual)</h2>
+
+      <p class="small"><strong>1.1</strong> La clasificacion DV se basa en:</p>
+      <label class="opt"><input type="radio" name="dv_base" value="Mejor ojo" required /> Mejor ojo</label>
+      <label class="opt"><input type="radio" name="dv_base" value="Peor ojo" /> Peor ojo</label>
+      <label class="opt"><input type="radio" name="dv_base" value="Ambos" /> Ambos</label>
+      <div class="field">
+        <label for="dv_base_ambos_detalle">Si es "Ambos", explique el criterio:</label>
+        <input id="dv_base_ambos_detalle" name="dv_base_ambos_detalle" type="text" maxlength="240" />
+      </div>
+
+      <div class="sep"></div>
+
+      <p class="small"><strong>1.2</strong> Que AV debe usarse para clasificar DV?</p>
+      <label class="opt"><input type="radio" name="dv_av_fuente" value="Sin estenopeico siempre" required /> AV sin estenopeico (siempre)</label>
+      <label class="opt"><input type="radio" name="dv_av_fuente" value="Con estenopeico si existe" /> Si hay estenopeico, usar estenopeico</label>
+      <label class="opt"><input type="radio" name="dv_av_fuente" value="Otro" /> Otro criterio</label>
+      <div class="field">
+        <label for="dv_av_fuente_otro">Si eligio "Otro", describa la regla:</label>
+        <input id="dv_av_fuente_otro" name="dv_av_fuente_otro" type="text" maxlength="240" />
+      </div>
+
+      <div class="sep"></div>
+
+      <p class="small"><strong>1.3</strong> Confirme limites exactos para todos los niveles DV del sistema (0 a 5):</p>
+      <div class="row">
+        <div class="field">
+          <label for="dv_0">DV 0</label>
+          <input id="dv_0" name="dv_0" type="text" required maxlength="120" placeholder="Ej: Sin DV (>= 20/60)" />
+        </div>
+        <div class="field">
+          <label for="dv_1">DV 1</label>
+          <input id="dv_1" name="dv_1" type="text" required maxlength="120" />
+        </div>
+        <div class="field">
+          <label for="dv_2">DV 2</label>
+          <input id="dv_2" name="dv_2" type="text" required maxlength="120" />
+        </div>
+        <div class="field">
+          <label for="dv_3">DV 3</label>
+          <input id="dv_3" name="dv_3" type="text" required maxlength="120" />
+        </div>
+        <div class="field">
+          <label for="dv_4">DV 4</label>
+          <input id="dv_4" name="dv_4" type="text" required maxlength="120" />
+        </div>
+        <div class="field">
+          <label for="dv_5">DV 5</label>
+          <input id="dv_5" name="dv_5" type="text" required maxlength="120" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="dv_notas">Notas / aclaraciones DV (opcional)</label>
+        <textarea id="dv_notas" name="dv_notas"></textarea>
+      </div>
+    </div>
+
+    <div class="box">
+      <h2>2) Diagnostico refractivo automatico</h2>
+      <p class="small">Para determinar automaticamente: Miopia / Hipermetropia / Astigmatismo / Emetropia.</p>
+
+      <div class="row">
+        <div class="field">
+          <label for="emetropia_rango">2.1 Definicion exacta de emetropia (rango)</label>
+          <input id="emetropia_rango" name="emetropia_rango" type="text" required maxlength="160" placeholder="Ej: ESF entre -0.50 y +0.50" />
+        </div>
+        <div class="field">
+          <label for="miopia_regla">Regla exacta para Miopia</label>
+          <input id="miopia_regla" name="miopia_regla" type="text" required maxlength="160" placeholder="Ej: ESF < -0.50" />
+        </div>
+        <div class="field">
+          <label for="hipermetropia_regla">Regla exacta para Hipermetropia</label>
+          <input id="hipermetropia_regla" name="hipermetropia_regla" type="text" required maxlength="160" placeholder="Ej: ESF > +0.50" />
+        </div>
+        <div class="field">
+          <label for="astigmatismo_regla">Regla exacta para Astigmatismo</label>
+          <input id="astigmatismo_regla" name="astigmatismo_regla" type="text" required maxlength="160" placeholder="Ej: |CIL| >= 0.75" />
+        </div>
+      </div>
+
+      <p class="small"><strong>2.2</strong> La clasificacion se basa en:</p>
+      <label class="opt"><input type="radio" name="refraccion_base" value="Esfera (ESF)" required /> Esfera (ESF)</label>
+      <label class="opt"><input type="radio" name="refraccion_base" value="Equivalente esferico (EE)" /> Equivalente esferico (EE)</label>
+      <label class="opt"><input type="radio" name="refraccion_base" value="Otro" /> Otro</label>
+      <div class="field">
+        <label for="refraccion_base_otro">Si eligio "Otro", explique:</label>
+        <input id="refraccion_base_otro" name="refraccion_base_otro" type="text" maxlength="240" />
+      </div>
+
+      <div class="field">
+        <label for="refraccion_combinacion">2.3 Si hay combinacion, formato de salida deseado</label>
+        <input id="refraccion_combinacion" name="refraccion_combinacion" type="text" required maxlength="160" placeholder='Ej: "Miopia con astigmatismo"' />
+      </div>
+
+      <div class="field">
+        <label for="refraccion_notas">Notas / aclaraciones refraccion (opcional)</label>
+        <textarea id="refraccion_notas" name="refraccion_notas"></textarea>
+      </div>
+    </div>
+
+    <div class="box">
+      <h2>3) Imagenes (segmento anterior / fondo de ojo / otro - OD/OI)</h2>
+
+      <p class="small"><strong>3.1</strong> Permitir multiples imagenes por rubro y ojo?</p>
+      <label class="opt"><input type="radio" name="imagenes_multiples" value="Si" required /> Si (ej: 3 fotos Fondo de Ojo OD)</label>
+      <label class="opt"><input type="radio" name="imagenes_multiples" value="No" /> No (solo 1 por rubro y ojo)</label>
+
+      <div class="field">
+        <label for="imagenes_variante_libre"><strong>3.2</strong> Variante de estudio (texto libre, sin catalogo inicial)</label>
+        <textarea id="imagenes_variante_libre" name="imagenes_variante_libre" placeholder="Ej: fluoresceina, midriasis, control, etc."></textarea>
+      </div>
+
+      <div class="field">
+        <label for="imagenes_notas">Notas / aclaraciones imagenes (opcional)</label>
+        <textarea id="imagenes_notas" name="imagenes_notas"></textarea>
+      </div>
+    </div>
+
+    <div class="box">
+      <h2>4) Reglas de integridad y folio interno</h2>
+
+      <p class="small"><strong>4.1</strong> Regla exacta para rechazar duplicado de paciente</p>
+      <label class="opt"><input type="checkbox" name="dup_reglas[]" value="Telefono exacto (solo digitos)" /> Telefono exacto (comparando solo digitos)</label>
+      <label class="opt"><input type="checkbox" name="dup_reglas[]" value="Correo exacto en minusculas" /> Correo exacto (normalizado en minusculas)</label>
+      <label class="opt"><input type="checkbox" name="dup_reglas[]" value="Nombre completo normalizado + fecha de nacimiento exacta" /> Nombre completo normalizado + fecha de nacimiento exacta</label>
+      <label class="opt"><input type="checkbox" name="dup_reglas[]" value="Nombre completo normalizado + fecha de nacimiento + sexo" /> Nombre completo normalizado + fecha de nacimiento + sexo</label>
+      <div class="field">
+        <label for="dup_regla_final">Regla final exacta que debe aplicar el sistema (obligatoria)</label>
+        <textarea id="dup_regla_final" name="dup_regla_final" required placeholder="Escribe la regla final unica para rechazo de duplicados."></textarea>
+      </div>
+      <p class="hint">
+        "Nombre completo normalizado" significa: quitar acentos, mayusculas/minusculas iguales y sin espacios dobles.
+      </p>
+
+      <div class="sep"></div>
+
+      <p class="small"><strong>4.2</strong> Formato del folio interno de paciente</p>
+      <div class="row">
+        <div class="field">
+          <label for="folio_prefijo">Prefijo</label>
+          <input id="folio_prefijo" name="folio_prefijo" type="text" required maxlength="16" placeholder="Ej: VC-P-" />
+        </div>
+        <div class="field">
+          <label for="folio_digitos">Cantidad de digitos</label>
+          <input id="folio_digitos" name="folio_digitos" type="number" required min="1" max="10" value="4" />
+        </div>
+        <div class="field">
+          <label for="folio_inicio">Valor inicial</label>
+          <input id="folio_inicio" name="folio_inicio" type="number" required min="1" value="1" />
+        </div>
+      </div>
+      <label class="opt"><input type="radio" name="folio_reinicio" value="Nunca" required /> Nunca reinicia</label>
+      <label class="opt"><input type="radio" name="folio_reinicio" value="Anual" /> Reinicia cada anio</label>
+      <label class="opt"><input type="radio" name="folio_reinicio" value="Otro" /> Otro</label>
+      <div class="field">
+        <label for="folio_reinicio_otro">Si eligio "Otro", explique:</label>
+        <input id="folio_reinicio_otro" name="folio_reinicio_otro" type="text" maxlength="120" />
+      </div>
+    </div>
+
+    <div class="box">
+      <h2>5) Casos clinicos esperados (cerrados para validar calculos)</h2>
+      <p class="small">
+        Complete 3 casos concretos. Cada caso debe ser totalmente reproducible con datos numericos/seleccionados.
+        Evite descripciones generales.
+      </p>
+
+      <div class="sep"></div>
+      <h3>Caso 1 (obligatorio)</h3>
+      <div class="case-grid">
+        <div class="field"><label for="c1_av_od">AV OD (sin estenopeico)</label><input id="c1_av_od" name="c1_av_od" type="text" required maxlength="40" placeholder="Ej: 20/70" /></div>
+        <div class="field"><label for="c1_av_oi">AV OI (sin estenopeico)</label><input id="c1_av_oi" name="c1_av_oi" type="text" required maxlength="40" placeholder="Ej: 20/100" /></div>
+        <div class="field"><label for="c1_estenopeico_od">Estenopeico OD</label><input id="c1_estenopeico_od" name="c1_estenopeico_od" type="text" maxlength="40" placeholder='Ej: "No" o "Si, 20/50"' /></div>
+        <div class="field"><label for="c1_estenopeico_oi">Estenopeico OI</label><input id="c1_estenopeico_oi" name="c1_estenopeico_oi" type="text" maxlength="40" /></div>
+        <div class="field"><label for="c1_refraccion_od">Refraccion OD (ESF/CIL/EJE)</label><input id="c1_refraccion_od" name="c1_refraccion_od" type="text" required maxlength="80" placeholder="Ej: -2.00 / -1.00 x 10" /></div>
+        <div class="field"><label for="c1_refraccion_oi">Refraccion OI (ESF/CIL/EJE)</label><input id="c1_refraccion_oi" name="c1_refraccion_oi" type="text" required maxlength="80" /></div>
+        <div class="field"><label for="c1_pio_od">PIO OD</label><input id="c1_pio_od" name="c1_pio_od" type="number" required min="0" max="80" /></div>
+        <div class="field"><label for="c1_pio_oi">PIO OI</label><input id="c1_pio_oi" name="c1_pio_oi" type="number" required min="0" max="80" /></div>
+        <div class="field"><label for="c1_retina_od">Reflejo retina OD</label><input id="c1_retina_od" name="c1_retina_od" type="text" required maxlength="40" placeholder="Ej: Rojo" /></div>
+        <div class="field"><label for="c1_retina_oi">Reflejo retina OI</label><input id="c1_retina_oi" name="c1_retina_oi" type="text" required maxlength="40" placeholder="Ej: Amarillo" /></div>
+      </div>
+      <div class="case-grid">
+        <div class="field"><label for="c1_esperado_dv">Salida esperada DV</label><input id="c1_esperado_dv" name="c1_esperado_dv" type="text" required maxlength="40" placeholder="Ej: DV 2" /></div>
+        <div class="field"><label for="c1_esperado_dx_od">Salida esperada Dx OD</label><input id="c1_esperado_dx_od" name="c1_esperado_dx_od" type="text" required maxlength="80" /></div>
+        <div class="field"><label for="c1_esperado_dx_oi">Salida esperada Dx OI</label><input id="c1_esperado_dx_oi" name="c1_esperado_dx_oi" type="text" required maxlength="80" /></div>
+        <div class="field"><label for="c1_esperado_alertas">Salida esperada Alertas</label><input id="c1_esperado_alertas" name="c1_esperado_alertas" type="text" required maxlength="120" placeholder="Ej: PIO OI alta; Retina OI anormal" /></div>
+      </div>
+
+      <div class="sep"></div>
+      <h3>Caso 2 (obligatorio)</h3>
+      <div class="field">
+        <label for="c2_entrada">Entrada completa (mismo formato del Caso 1)</label>
+        <textarea id="c2_entrada" name="c2_entrada" required placeholder="AV OD=?, AV OI=?, estenopeico OD/OI=?, refraccion OD=?, refraccion OI=?, PIO OD/OI=?, retina OD/OI=?"></textarea>
+      </div>
+      <div class="field">
+        <label for="c2_salida">Salida esperada completa</label>
+        <textarea id="c2_salida" name="c2_salida" required placeholder="DV=?, Dx OD=?, Dx OI=?, Alertas=?"></textarea>
+      </div>
+
+      <div class="sep"></div>
+      <h3>Caso 3 (obligatorio)</h3>
+      <div class="field">
+        <label for="c3_entrada">Entrada completa (mismo formato del Caso 1)</label>
+        <textarea id="c3_entrada" name="c3_entrada" required placeholder="AV OD=?, AV OI=?, estenopeico OD/OI=?, refraccion OD=?, refraccion OI=?, PIO OD/OI=?, retina OD/OI=?"></textarea>
+      </div>
+      <div class="field">
+        <label for="c3_salida">Salida esperada completa</label>
+        <textarea id="c3_salida" name="c3_salida" required placeholder="DV=?, Dx OD=?, Dx OI=?, Alertas=?"></textarea>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button type="submit">Enviar respuestas</button>
+    </div>
+  </form>
+
+  <p class="footer">
+    Gracias, doctor(a). Con estas respuestas dejamos la automatizacion alineada a su criterio clinico.
+    <br />
+    <span class="hint">Tambien puede imprimir este documento si prefiere llenarlo en papel.</span>
+  </p>
+</body>
+</html>
